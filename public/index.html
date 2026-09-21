@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Primary Meta Tags -->
+  <title>Health is Wealth | Health, Beauty & Wellness Products</title>
+  <meta name="title" content="Health is Wealth | Health, Beauty & Wellness Products" />
+  <meta name="description" content="Shop health, beauty, wellness, skincare, hair care and personal-care products from Health is Wealth. Order conveniently through WhatsApp." />
+  <meta name="keywords" content="Health is Wealth, beauty products Nigeria, skincare Lagos, hair growth butter, wellness tea, WhatsApp order beauty shop" />
+  <meta name="author" content="Health is Wealth" />
+  <meta name="theme-color" content="#009444" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Health is Wealth | Health, Beauty & Wellness Products" />
+  <meta property="og:description" content="Shop health, beauty, wellness, skincare, hair care and personal-care products from Health is Wealth. Order conveniently through WhatsApp." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1608248597359-2e11894d0fb8?auto=format&fit=crop&w=1200&q=80" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Health is Wealth | Health, Beauty & Wellness Products" />
+  <meta property="twitter:description" content="Shop health, beauty, wellness, skincare, hair care and personal-care products from Health is Wealth. Order conveniently through WhatsApp." />
+  <meta property="twitter:image" content="https://images.unsplash.com/photo-1608248597359-2e11894d0fb8?auto=format&fit=crop&w=1200&q=80" />
+
+  <!-- Brand Favicon -->
+  <link rel="icon" type="image/jpeg" href="https://i.ibb.co/gZMFnG2k/1789821196338-1.jpg" />
+  <link rel="apple-touch-icon" href="https://i.ibb.co/gZMFnG2k/1789821196338-1.jpg" />
+
+  <!-- Preconnect to Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/style.css" />
+
+  <script>
+    // Universal Admin Route Redirection
+    (function() {
+      try {
+        var p = (window.location.pathname || '').toLowerCase();
+        var h = (window.location.hash || '').toLowerCase();
+        var s = (window.location.search || '').toLowerCase();
+        if (p === '/admin' || p === '/admin/' || h === '#admin' || h.indexOf('admin') !== -1 || s.indexOf('admin') !== -1) {
+          if (p !== '/admin/index.html') {
+            window.location.replace('/admin/index.html');
+          }
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HealthAndBeautyBusiness",
+    "name": "Health is Wealth",
+    "description": "Curated health, beauty, wellness, and self-care products with direct, effortless ordering via WhatsApp.",
+    "telephone": "+2348084765252",
+    "priceRange": "₦₦",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Lagos",
+      "addressCountry": "NG"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ======================================================================
+       1. TOP REGULATION / ANNOUNCEMENT BAR (BUMPA ARCHITECTURE)
+       ====================================================================== -->
+  <div class="regulation-nav" id="regulationNav" role="region" aria-label="Store Announcement">
+    <div class="marquee-track">
+      <div class="marquee-content">
+        <span class="announcement-text">🌿 <strong>Health is Wealth:</strong> Located in Enugu, Abuja &amp; Lagos • Delivering Nationwide Across Nigeria • Direct WhatsApp Ordering</span>
+        <span class="marquee-dot" aria-hidden="true">•</span>
+        <span class="announcement-text">🌿 <strong>Health is Wealth:</strong> Premium Health, Beauty &amp; Wellness Essentials • Located in Enugu, Abuja &amp; Lagos • Nationwide Delivery</span>
+        <span class="marquee-dot" aria-hidden="true">•</span>
+      </div>
+      <div class="marquee-content" aria-hidden="true">
+        <span class="announcement-text">🌿 <strong>Health is Wealth:</strong> Located in Enugu, Abuja &amp; Lagos • Delivering Nationwide Across Nigeria • Direct WhatsApp Ordering</span>
+        <span class="marquee-dot" aria-hidden="true">•</span>
+        <span class="announcement-text">🌿 <strong>Health is Wealth:</strong> Premium Health, Beauty &amp; Wellness Essentials • Located in Enugu, Abuja &amp; Lagos • Nationwide Delivery</span>
+        <span class="marquee-dot" aria-hidden="true">•</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar Placeholder to prevent layout shift when navbar is fixed -->
+  <div class="nav-placeholder"></div>
+
+  <!-- ======================================================================
+       2. BUMPA NAVBAR ARCHITECTURE
+       ====================================================================== -->
+  <nav class="navbar" id="siteNavbar">
+    <div class="nav-two global-padding">
+      
+      <!-- Store Brand / Logo -->
+      <a href="#productsSection" class="home" id="brandLogoLink" aria-label="Health is Wealth Home">
+        <div class="brand-logo-mark">
+          <img src="https://i.ibb.co/gZMFnG2k/1789821196338-1.jpg" alt="Health is Wealth Logo" class="brand-header-logo-img" />
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Health <span class="brand-accent">is</span> Wealth</span>
+        </div>
+      </a>
+
+      <!-- Search & Nav Controls -->
+      <div class="left-nav" id="leftNav">
+        <!-- Live Search Bar -->
+        <div class="input-body">
+          <input 
+            type="search" 
+            class="search-input" 
+            id="bumpaSearchInput" 
+            placeholder="Search products, skincare, hair care..." 
+            autocomplete="off"
+            aria-label="Search store products"
+          />
+          <button type="button" class="search-button" id="bumpaSearchBtn" aria-label="Search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+
+          <!-- Autocomplete / Search Suggestions Popover -->
+          <div class="search-suggestions" id="searchSuggestions" style="display: none;"></div>
+        </div>
+
+        <!-- Currency Selector -->
+        <div class="currency-group">
+          <button type="button" class="currency-info" id="currencyToggleBtn" aria-label="Currency Selector">
+            <span class="currency-flag">🇳🇬</span>
+            <span class="currency-code">NGN</span>
+            <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="currency-dropdown" id="currencyDropdown" style="display: none;">
+            <div class="currency-item active">
+              <span>🇳🇬 Nigerian Naira (NGN - ₦)</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Support Shortcut -->
+        <div class="account-group">
+          <a href="#contactSection" class="account-info" id="navSupportLink" title="Customer Support">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            <span class="account-label">Contact</span>
+          </a>
+        </div>
+
+        <!-- WhatsApp Quick Chat Header Button -->
+        <a 
+          href="https://wa.me/2348084765252" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="btn-wa-header"
+          id="headerWhatsAppLink"
+          aria-label="Order on WhatsApp"
+        >
+          <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.073.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/>
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.176L2 22l4.981-1.397A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.167c-1.688 0-3.255-.494-4.577-1.344l-.328-.21-2.96.83.844-2.883-.229-.344C3.843 14.86 3.333 13.483 3.333 12c0-4.779 3.888-8.667 8.667-8.667 4.778 0 8.667 3.888 8.667 8.667 0 4.779-3.889 8.667-8.667 8.667z"/>
+          </svg>
+          <span>WhatsApp</span>
+        </a>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- ======================================================================
+       3. HOME PAGE (BUMPA TEMPLATE ARCHITECTURE)
+       ====================================================================== -->
+  <main class="home-page" id="homePageMain">
+
+    <!-- PAGE SECTION -->
+    <div class="page-section" id="productsSection">
+      
+      <!-- COLLECTIONS FILTER BAR -->
+      <div class="collections">
+        <div>
+          <div class="collection-list" id="collectionList">
+            <button type="button" class="collection-tab collection-active" data-tag="All" id="tabAll">All</button>
+            <button type="button" class="collection-tab" data-tag="Health" id="tabHealth">Health</button>
+            <button type="button" class="collection-tab" data-tag="Beauty/Wellness" id="tabBeautyWellness">Beauty/Wellness</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUCTS CONTAINER -->
+      <div class="global-padding">
+        <div class="products-container">
+          
+          <!-- Bumpa Section Header -->
+          <div class="section-title-wrapper">
+            <div>
+              <h2 class="section-main-heading">LATEST PRODUCTS</h2>
+              <p class="section-sub-heading">TOP TRENDING PRODUCTS THIS WEEK</p>
+            </div>
+            <div class="filter-status-info" id="filterStatusInfo">
+              <span id="productResultsCount">12 Products</span>
+              <span class="delivery-notice-pill">Enugu • Abuja • Lagos • Nationwide Delivery</span>
+            </div>
+          </div>
+
+          <!-- Products Grid -->
+          <div class="products" id="bumpaProductsGrid">
+            <!-- Dynamically populated via script.js -->
+          </div>
+
+          <!-- Bumpa Pagination Component -->
+          <div class="pagination" id="bumpaPagination"></div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ======================================================================
+         4. THE HEALTH IS WEALTH PROMISE (RETAINED CONTENT)
+         ====================================================================== -->
+    <section class="section why-section global-padding" id="whyChooseUsSection">
+      <div class="why-inner-container">
+        <div class="section-intro-center">
+          <span class="eyebrow-tag">The Health is Wealth Promise</span>
+          <h2 class="section-title-standard">Why Choose Health is Wealth</h2>
+          <p class="section-desc-standard">
+            We bring you genuine self-care products with a seamless, stress-free ordering experience directly on WhatsApp.
+          </p>
+        </div>
+
+        <div class="why-cards-grid">
+          <div class="why-feature-card">
+            <div class="why-icon-circle">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </div>
+            <h3 class="why-card-heading">Quality Products</h3>
+            <p class="why-card-text">Carefully selected products focused on beauty, wellness, and personal care.</p>
+          </div>
+
+          <div class="why-feature-card">
+            <div class="why-icon-circle">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <h3 class="why-card-heading">Easy Ordering</h3>
+            <p class="why-card-text">Order directly through WhatsApp without complicated checkout processes.</p>
+          </div>
+
+          <div class="why-feature-card">
+            <div class="why-icon-circle">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </div>
+            <h3 class="why-card-heading">Customer Support</h3>
+            <p class="why-card-text">Chat directly with us for product questions, beauty tips, and routine assistance.</p>
+          </div>
+
+          <div class="why-feature-card">
+            <div class="why-icon-circle">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                <line x1="12" y1="18" x2="12.01" y2="18"></line>
+              </svg>
+            </div>
+            <h3 class="why-card-heading">Simple Shopping</h3>
+            <p class="why-card-text">Browse products easily from your phone or computer anytime, anywhere.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         5. ABOUT SECTION (RETAINED CONTENT)
+         ====================================================================== -->
+    <section class="section about-section global-padding" id="aboutSection">
+      <div class="about-container">
+        <div class="about-grid-layout">
+
+          <div class="about-text-content">
+            <span class="eyebrow-tag">Our Philosophy</span>
+            <h2 class="section-title-standard">About Health is Wealth</h2>
+            <p class="about-quote-box">
+              "At Health is Wealth, we believe that taking care of yourself is an important part of living well. We provide health, beauty, wellness, and personal-care products that make self-care simple and convenient."
+            </p>
+            <p class="about-paragraph">
+              Founded with a passion for holistic well-being and natural radiance, our store bridges the gap between premium self-care essentials and effortless shopping. We carefully select every formula, ensuring you receive authentic, high-performance products suited for your skin, hair, and everyday wellness routine.
+            </p>
+
+            <div class="about-bullets">
+              <div class="bullet-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <div>
+                  <strong>Authentic Products:</strong> Zero fake or substandard items.
+                </div>
+              </div>
+              <div class="bullet-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <div>
+                  <strong>Personalized Care:</strong> We advise you directly on WhatsApp before you buy.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6. CONTACT SECTION (RETAINED CONTENT)
+         ====================================================================== -->
+    <section class="section contact-section global-padding" id="contactSection">
+      <div class="contact-box-card">
+        <span class="eyebrow-tag light">Get in Touch</span>
+        <h2 class="contact-title">Health is Wealth</h2>
+        <p class="contact-desc">
+          Have questions about a product or want personalized recommendations? Connect directly with us on WhatsApp for fast, friendly assistance.
+        </p>
+
+        <div class="contact-button-row">
+          <a 
+            href="https://wa.me/2348084765252" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="btn-wa-large"
+            id="contactSectionWhatsAppBtn"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.073.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/>
+              <path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.176L2 22l4.981-1.397A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.167c-1.688 0-3.255-.494-4.577-1.344l-.328-.21-2.96.83.844-2.883-.229-.344C3.843 14.86 3.333 13.483 3.333 12c0-4.779 3.888-8.667 8.667-8.667 4.778 0 8.667 3.888 8.667 8.667 0 4.779-3.889 8.667-8.667 8.667z"/>
+            </svg>
+            <span>Chat on WhatsApp: 08084765252</span>
+          </a>
+        </div>
+
+        <div class="contact-meta-grid">
+          <div class="contact-meta-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            <div>
+              <strong>WhatsApp Hotline</strong>
+              <p>08084765252</p>
+            </div>
+          </div>
+          <div class="contact-meta-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <div>
+              <strong>Locations &amp; Delivery</strong>
+              <p>Enugu, Abuja &amp; Lagos (Nationwide Delivery)</p>
+            </div>
+          </div>
+          <div class="contact-meta-item">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div>
+              <strong>Operating Hours</strong>
+              <p>Mon - Sat: 8:00 AM – 8:00 PM</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================================
+       7. BUMPA FOOTER ARCHITECTURE
+       ====================================================================== -->
+  <footer class="footer" id="siteFooter">
+    <div class="footer-container global-padding">
+      <div class="footer-details">
+        
+        <!-- Newsletter Signup Section -->
+        <div class="news-letter">
+          <div class="form">
+            <h2>SIGN UP FOR DISCOUNTS &amp; UPDATES</h2>
+            <p class="message" id="newsletterMessage">Sign up for our e-mail and WhatsApp list to be the first who know of our special offers and new self-care arrivals!</p>
+            
+            <form class="input-body" id="newsletterForm" onsubmit="event.preventDefault(); handleNewsletterSubmit();">
+              <input 
+                type="text" 
+                id="newsletterInput" 
+                placeholder="Enter your phone number or email address" 
+                required
+                aria-label="Phone number or email for newsletter"
+              />
+              <button type="submit" id="newsletterSubmitBtn">Subscribe</button>
+            </form>
+
+            <div class="footer-row">
+              <div class="quick-links">
+                <a href="#productsSection" class="footer-nav-link"><span>Catalog</span></a>
+                <a href="#whyChooseUsSection" class="footer-nav-link"><span>Why Choose Us</span></a>
+                <a href="#aboutSection" class="footer-nav-link"><span>About Us</span></a>
+                <a href="#contactSection" class="footer-nav-link"><span>Contact</span></a>
+              </div>
+              <div class="currency-group">
+                <button type="button" class="currency-info" aria-label="Currency" onclick="toggleCurrencyDropdown()">
+                  <span>NGN (₦)</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.5">
+                    <path d="M6.5 9L12.5 15L18.5 9" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info Group / Contact & Copyright -->
+        <div class="info-group">
+          <div class="group-one">
+            <div class="footer-brand-header">
+              <img src="https://i.ibb.co/gZMFnG2k/1789821196338-1.jpg" alt="Health is Wealth Logo" class="footer-brand-logo-img" />
+              <span class="footer-brand-title">Health <span class="brand-accent">is</span> Wealth</span>
+            </div>
+            <a href="#productsSection" class="home-link">Home</a>
+            <p class="header">CONTACT US</p>
+            
+            <div class="contact-row">
+              <p>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                <a href="https://wa.me/2348084765252" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;">08084765252</a>
+              </p>
+            </div>
+
+            <div class="contact-row">
+              <p>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>Enugu, Abuja &amp; Lagos • Nationwide Delivery</span>
+              </p>
+            </div>
+
+            <div class="contact-row">
+              <p>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span>Mon - Sat: 8:00 AM – 8:00 PM</span>
+              </p>
+            </div>
+
+            <!-- Social Links -->
+            <div class="social_flex">
+              <div class="socials">
+                <a href="https://wa.me/2348084765252" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="WhatsApp">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.073.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/>
+                    <path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.176L2 22l4.981-1.397A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.167c-1.688 0-3.255-.494-4.577-1.344l-.328-.21-2.96.83.844-2.883-.229-.344C3.843 14.86 3.333 13.483 3.333 12c0-4.779 3.888-8.667 8.667-8.667 4.778 0 8.667 3.888 8.667 8.667 0 4.779-3.889 8.667-8.667 8.667z"/>
+                  </svg>
+                </a>
+                <a href="https://www.instagram.com/healthis440?stkn=MW4xMDM0a3cwdmwwOA==" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram" id="footerInstagramLink">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61550049644320" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook" id="footerFacebookLink">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Copyright bar -->
+            <div class="copyright-group">
+              <p>© 2026 Health is Wealth. All Rights Reserved.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================================
+       8. QUICK VIEW / PRODUCT DETAILS MODAL (BUMPA QUICK-VIEW)
+       ====================================================================== -->
+  <div class="quick-view-modal app-modal" id="quickViewModal" role="dialog" aria-modal="true" style="display: none;">
+    <div class="overlay" id="quickViewOverlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="quickViewTitle">Product Details</h3>
+        <button type="button" class="close-button" id="closeQuickViewBtn" aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="quickViewBody">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       9. SLIDE-OVER SHOPPING BAG / CART DRAWER (BUMPA CART)
+       ====================================================================== -->
+  <div class="cart-slideover" id="cartSlideover" style="display: none;">
+    <div class="cart-backdrop" id="cartBackdrop"></div>
+    <div class="cart-panel">
+      <div class="cart-header">
+        <div class="cart-title-wrapper">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+            <path d="M3 6h18"></path>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <h3>Your Shopping Bag (<span id="cartDrawerCount">0</span>)</h3>
+        </div>
+        <button type="button" class="cart-close-btn" id="closeCartBtn" aria-label="Close shopping bag">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="cart-body" id="cartItemsContainer">
+        <!-- Injected dynamically via script.js -->
+      </div>
+
+      <div class="cart-footer" id="cartFooter">
+        <div class="cart-subtotal-row">
+          <span>Subtotal</span>
+          <span class="cart-subtotal-amount" id="cartSubtotalAmount">₦0</span>
+        </div>
+        <p class="cart-note">Nationwide delivery across Nigeria. Fast dispatch from Lagos.</p>
+        <button type="button" class="btn-checkout-wa" id="checkoutWhatsAppBtn">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.073.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/>
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.176L2 22l4.981-1.397A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.167c-1.688 0-3.255-.494-4.577-1.344l-.328-.21-2.96.83.844-2.883-.229-.344C3.843 14.86 3.333 13.483 3.333 12c0-4.779 3.888-8.667 8.667-8.667 4.778 0 8.667 3.888 8.667 8.667 0 4.779-3.889 8.667-8.667 8.667z"/>
+          </svg>
+          <span>Checkout via WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       10. FLOATING WHATSAPP BUTTON (PULSING)
+       ====================================================================== -->
+  <div class="floating-wa-container">
+    <div class="floating-wa-tooltip">Chat with us on WhatsApp</div>
+    <a 
+      href="https://wa.me/2348084765252" 
+      id="floatingWhatsAppBtn" 
+      class="floating-wa-btn" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      aria-label="Chat with Health is Wealth on WhatsApp"
+    >
+      <span class="floating-wa-pulse"></span>
+      <svg class="floating-wa-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.073.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/>
+        <path d="M12 2C6.477 2 2 6.477 2 12c0 1.891.524 3.662 1.435 5.176L2 22l4.981-1.397A9.957 9.957 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18.167c-1.688 0-3.255-.494-4.577-1.344l-.328-.21-2.96.83.844-2.883-.229-.344C3.843 14.86 3.333 13.483 3.333 12c0-4.779 3.888-8.667 8.667-8.667 4.778 0 8.667 3.888 8.667 8.667 0 4.779-3.889 8.667-8.667 8.667z"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Shared Botanical Products Catalog Data -->
+  <script src="/products-data.js"></script>
+
+  <!-- Supabase REST Client Adapter -->
+  <script src="/supabase-client.js"></script>
+
+  <!-- Vanilla JavaScript Application Engine -->
+  <script src="/script.js"></script>
+</body>
+</html>

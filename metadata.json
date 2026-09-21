@@ -1,0 +1,6 @@
+{
+  "name": "Health is Wealth",
+  "description": "Discover carefully selected health, beauty, and wellness products designed to help you look good, feel good, and care for yourself. Order directly via WhatsApp.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
