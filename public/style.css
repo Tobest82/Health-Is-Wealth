@@ -2176,17 +2176,3 @@ img {
   }
 }
 
-/* ==========================================================================
-   PRODUCT SEARCH SHORTCUT FOR ADMIN DASHBOARD
-   ========================================================================== */
-.suggestion-admin {
-  background-color: #ecfdf5 !important;
-  border-left: 3.5px solid #059669 !important;
-  cursor: pointer;
-  transition: background-color var(--transition-fast);
-}
-
-.suggestion-admin:hover {
-  background-color: #d1fae5 !important;
-}
-

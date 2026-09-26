@@ -3,1506 +3,897 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard | Health is Wealth Store Management</title>
-  <meta name="robots" content="noindex, nofollow" />
-  <link rel="icon" type="image/jpeg" href="https://i.ibb.co/gZMFnG2k/1789821196338-1.jpg" />
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  
+  <title>Health is Wealth — Administration Dashboard</title>
+  <meta name="description" content="Secure administrative panel for Health is Wealth botanical store. Manage products, categories, orders, website content, and media directly in Supabase." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23059669'%3E%3Cpath d='M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5zm0 18c-3.75-1-6.9-4.88-6.9-9.5V8.3l6.9-3.83 6.9 3.83V10.5c0 4.62-3.15 8.5-6.9 9.5z'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="/admin/admin.css" />
 </head>
 <body>
 
-  <!-- ======================================================================
-       1. AUTHENTICATION LOCK SCREEN (PASSWORD: tontobest82)
-       ====================================================================== -->
-  <div class="auth-wrapper" id="authScreen">
-    <div class="auth-card">
-      <div class="auth-brand">
-        <div class="auth-logo-icon">
-          <img src="https://i.ibb.co/gZMFnG2k/1789821196338-1.jpg" alt="Health is Wealth" class="auth-logo-img" />
+  <!-- =====================================================================
+       1. AUTHENTICATION / LOGIN SCREEN (PROTECTED GATEWAY)
+       ===================================================================== -->
+  <div class="login-screen-wrapper" id="loginScreen" style="display: flex;">
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="login-brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
         </div>
-        <h2>Health <span class="accent-text">is</span> Wealth</h2>
-        <span class="auth-subtitle">Store Administration Portal</span>
+        <div>
+          <h2 class="login-title">Health is Wealth</h2>
+          <div style="font-size: 0.75rem; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: 0.05em;">Administration Suite</div>
+        </div>
       </div>
 
-      <p class="auth-desc">Enter the store admin password to manage products, pricing, stock levels, and store settings.</p>
+      <p class="login-subtitle">Enter your administrator credentials to securely manage the botanical store, inventory, orders, and Supabase database.</p>
 
-      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" autocomplete="off">
+      <div class="hint-pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"></path></svg>
+        <span>Super Administrator Portal • Protected by Supabase Auth</span>
+      </div>
+
+      <div class="login-alert" id="loginAlert"></div>
+
+      <form id="loginForm" autocomplete="off">
         <div class="form-group">
-          <label for="adminPasswordInput">Admin Password</label>
-          <div class="password-input-wrapper">
-            <input 
-              type="password" 
-              id="adminPasswordInput" 
-              placeholder="Enter password..." 
-              required 
-              autofocus 
-              autocomplete="off"
-              autocorrect="off"
-              autocapitalize="off"
-            />
-            <button type="button" class="btn-toggle-pw" id="togglePasswordBtn" onclick="togglePasswordVisibility()" aria-label="Toggle password visibility">
-              <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg>
-            </button>
-          </div>
-          <div class="auth-error-msg" id="authErrorMsg" style="display: none;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="8" x2="12" y2="12"></line>
-              <line x1="12" y1="16" x2="12.01" y2="16"></line>
-            </svg>
-            <span id="authErrorText">Incorrect password. Please try again.</span>
-          </div>
+          <label class="form-label" for="loginEmail">Administrator Email</label>
+          <input type="email" id="loginEmail" class="form-control" value="emmanueltobest73@gmail.com" required placeholder="admin@healthiswealth.ng" />
         </div>
 
-        <div class="remember-row">
-          <label class="checkbox-label">
-            <input type="checkbox" id="rememberMeCheckbox" checked />
-            <span>Keep me logged in on this browser</span>
-          </label>
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+            <label class="form-label" for="loginPassword" style="margin-bottom: 0;">Password</label>
+            <button type="button" id="togglePasswordBtn" style="background:none; border:none; font-size: 0.75rem; color: #64748b; cursor: pointer; font-weight: 600;">Show</button>
+          </div>
+          <input type="password" id="loginPassword" class="form-control" required placeholder="Enter administrator password" autocomplete="current-password" />
         </div>
 
-        <button type="submit" class="btn-auth-submit" id="authSubmitBtn">
-          <span>Unlock Admin Dashboard</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
+        <button type="submit" id="loginSubmitBtn" class="btn btn-primary" style="width: 100%; padding: 0.75rem; font-size: 0.95rem; margin-top: 0.75rem;">
+          <span id="loginBtnText">Sign In to Dashboard</span>
+          <span id="loginBtnSpinner" style="display: none;">Verifying Credentials...</span>
         </button>
 
-        <div class="auth-footer-links">
-          <a href="/" class="back-to-store">← Return to Public Storefront</a>
+        <div style="text-align: center; margin-top: 1.5rem; font-size: 0.78rem; color: #94a3b8;">
+          <a href="/" style="color: #64748b; text-decoration: none;">← Return to Storefront</a>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- ======================================================================
-       2. ADMIN MAIN DASHBOARD (VISIBLE ONCE AUTHENTICATED)
-       ====================================================================== -->
-  <div class="admin-app" id="adminApp" style="display: none;">
-    
-    <!-- Top Bar -->
-    <header class="admin-header">
-      <div class="header-inner">
-        <div class="brand-area">
-          <div class="admin-logo-mark">
-            <img src="https://i.ibb.co/gZMFnG2k/1789821196338-1.jpg" alt="Health is Wealth" class="admin-header-logo-img" />
-          </div>
-          <div>
-            <h1 class="admin-title">Health <span class="accent-text">is</span> Wealth</h1>
-            <div class="admin-badge">Admin Console • Enugu, Abuja &amp; Lagos</div>
-          </div>
-        </div>
+  <!-- =====================================================================
+       2. AUTHENTICATED DASHBOARD APPLICATION
+       ===================================================================== -->
+  <div class="admin-app-layout" id="adminApp" style="display: none;">
 
-        <div class="header-actions">
-          <button type="button" class="btn-push-supabase-header btn-push-supabase-trigger" id="btnHeaderPushSupabase" onclick="handlePushToSupabase()" title="Push 27 products & store settings to Supabase">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
-              <polyline points="12 13 12 7"></polyline>
-              <polyline points="9 10 12 7 15 10"></polyline>
-            </svg>
-            <span data-default-text="Push to Supabase">Push to Supabase</span>
-          </button>
+    <!-- Mobile Drawer Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-          <a href="/" target="_blank" rel="noopener noreferrer" class="btn-secondary-link">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            <span>View Live Store</span>
-          </a>
-
-          <button type="button" class="btn-logout" onclick="handleAdminLogout()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-              <polyline points="16 17 21 12 16 7"></polyline>
-              <line x1="21" y1="12" x2="9" y2="12"></line>
-            </svg>
-            <span>Log Out</span>
-          </button>
+    <!-- LEFT SIDEBAR -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand-badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
         </div>
-      </div>
-    </header>
-
-    <!-- Main Container -->
-    <main class="admin-main">
-      
-      <!-- Metrics Overview -->
-      <section class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-icon bg-emerald">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-            </svg>
-          </div>
-          <div class="metric-info">
-            <span class="metric-label">Total Catalog Products</span>
-            <strong class="metric-value" id="metricTotalProducts">0</strong>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-icon bg-blue">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"></circle>
-              <polyline points="12 6 12 12 14 14"></polyline>
-            </svg>
-          </div>
-          <div class="metric-info">
-            <span class="metric-label">Active Stock Items</span>
-            <strong class="metric-value" id="metricInStock">0</strong>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-icon bg-amber">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-            </svg>
-          </div>
-          <div class="metric-info">
-            <span class="metric-label">Featured &amp; Bestsellers</span>
-            <strong class="metric-value" id="metricFeatured">0</strong>
-          </div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-icon bg-purple">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-          </div>
-          <div class="metric-info">
-            <span class="metric-label">Physical Fulfillment Hubs</span>
-            <strong class="metric-value" style="font-size: 1.05rem;">Enugu • Abuja • Lagos</strong>
-          </div>
-        </div>
-      </section>
-
-      <!-- Cloud Sync & Supabase Quick Bar -->
-      <div class="supabase-quick-banner" id="supabaseQuickBanner">
-        <div class="supabase-banner-left">
-          <div class="supabase-banner-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
-              <polyline points="12 13 12 7"></polyline>
-              <polyline points="9 10 12 7 15 10"></polyline>
-            </svg>
-          </div>
-          <div class="supabase-banner-text">
-            <div class="supabase-banner-title">
-              <strong>Supabase Cloud Database</strong>
-              <span class="supabase-status-pill local" id="bannerSupabaseBadge" style="font-size: 0.72rem; padding: 2px 8px;">
-                <span class="status-indicator-dot"></span>
-                <span id="bannerSupabaseStatusText">Local Storage Mode</span>
-              </span>
-            </div>
-            <p class="supabase-banner-desc">Push your 27 curated botanical products, categories &amp; Sterling Bank settings to your Supabase project.</p>
-          </div>
-        </div>
-        <div class="supabase-banner-actions">
-          <button type="button" class="btn-supabase-banner-push btn-push-supabase-trigger" id="btnOverviewPushSupabase" onclick="handlePushToSupabase()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
-              <polyline points="12 13 12 7"></polyline>
-              <polyline points="9 10 12 7 15 10"></polyline>
-            </svg>
-            <span data-default-text="Push Local Catalog to Supabase">Push Local Catalog to Supabase</span>
-          </button>
-          <button type="button" class="btn-supabase-banner-secondary" onclick="handlePullFromSupabase()" title="Pull live catalog from Supabase">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
-              <polyline points="12 7 12 13"></polyline>
-              <polyline points="9 10 12 13 15 10"></polyline>
-            </svg>
-            <span>Pull from Supabase</span>
-          </button>
-          <button type="button" class="btn-supabase-banner-settings" onclick="switchTab('settings')" title="Configure Supabase Keys & SQL">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="3"></circle>
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-            </svg>
-            <span>Supabase Settings / SQL</span>
-          </button>
-        </div>
+        <div class="sidebar-brand-title">Admin Console</div>
       </div>
 
-      <!-- Tab Navigation -->
-      <nav class="admin-tabs">
-        <button type="button" class="tab-btn active" id="tabBtnProducts" onclick="switchTab('products')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-            <line x1="8" y1="21" x2="16" y2="21"></line>
-            <line x1="12" y1="17" x2="12" y2="21"></line>
-          </svg>
-          <span>Product Catalog</span>
-          <span class="tab-badge" id="tabProductCount">0</span>
-        </button>
-
-        <button type="button" class="tab-btn" id="tabBtnCategories" onclick="switchTab('categories')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 6h16M4 12h16M4 18h7"></path>
-          </svg>
+      <nav class="sidebar-nav">
+        <div class="nav-label">Core Management</div>
+        <a class="nav-item active" data-view="dashboard" onclick="switchView('dashboard')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-item" data-view="products" onclick="switchView('products')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span>Products</span>
+          <span class="badge-count" id="sidebarProductCount">0</span>
+        </a>
+        <a class="nav-item" data-view="categories" onclick="switchView('categories')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
           <span>Categories</span>
-          <span class="tab-badge" id="tabCategoryCount">2</span>
-        </button>
+          <span class="badge-count" id="sidebarCategoryCount">0</span>
+        </a>
+        <a class="nav-item" data-view="orders" onclick="switchView('orders')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span>Customer Orders</span>
+          <span class="badge-count" id="sidebarOrderCount">0</span>
+        </a>
 
-        <button type="button" class="tab-btn" id="tabBtnSettings" onclick="switchTab('settings')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="3"></circle>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-          </svg>
-          <span>Store Settings &amp; Marquee</span>
-        </button>
+        <div class="nav-label">Store &amp; Assets</div>
+        <a class="nav-item" data-view="content" onclick="switchView('content')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          <span>Website Content</span>
+        </a>
+        <a class="nav-item" data-view="media" onclick="switchView('media')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+          <span>Media Storage</span>
+        </a>
+        <a class="nav-item" data-view="settings" onclick="switchView('settings')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>Store Settings</span>
+        </a>
+        <a class="nav-item" data-view="sync" onclick="switchView('sync')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          <span>Supabase Sync</span>
+        </a>
 
-        <button type="button" class="tab-btn" id="tabBtnWhatsApp" onclick="switchTab('whatsapp')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.073.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/>
-          </svg>
-          <span>WhatsApp Link Generator</span>
-        </button>
+        <div class="nav-label">Navigation</div>
+        <a href="/" target="_blank" class="nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          <span>View Live Store</span>
+        </a>
       </nav>
 
-      <!-- TAB 1: PRODUCT CATALOG -->
-      <section class="tab-panel active" id="panelProducts">
-        
-        <!-- Action Toolbar -->
-        <div class="toolbar-card">
-          <div class="search-filter-group">
-            <div class="admin-search-wrapper">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-              <input 
-                type="search" 
-                id="adminProductSearch" 
-                placeholder="Search products by title, category, or tag..." 
-                oninput="handleAdminSearch(this.value)"
-              />
-            </div>
-
-            <div class="category-pills" id="adminCategoryPills">
-              <!-- Dynamically populated via renderAdminCategoryPills() -->
-            </div>
-
-            <button type="button" class="btn-manage-cats-inline" onclick="switchTab('categories')" title="View store categories">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 20h9"></path>
-                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-              </svg>
-              <span>View Categories</span>
-            </button>
+      <div class="sidebar-footer">
+        <div class="sidebar-user-card">
+          <div class="sidebar-avatar">ET</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name" id="sidebarAdminEmail">emmanueltobest73@gmail.com</div>
+            <div class="sidebar-user-role">Super Administrator</div>
           </div>
-
-          <div class="toolbar-buttons">
-            <button type="button" class="btn-primary" onclick="openProductModal()">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-              <span>Add Product</span>
-            </button>
-
-            <button type="button" class="btn-supabase-catalog-push btn-push-supabase-trigger" id="btnCatalogPushSupabase" onclick="handlePushToSupabase()" title="Push 27 products & store settings to Supabase">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
-                <polyline points="12 13 12 7"></polyline>
-                <polyline points="9 10 12 7 15 10"></polyline>
-              </svg>
-              <span data-default-text="Push to Supabase">Push to Supabase</span>
-            </button>
-
-            <button type="button" class="btn-secondary" onclick="confirmResetDefaults()" title="Reset catalog to all 27 botanical products">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
-                <path d="M21 3v5h-5"></path>
-                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
-                <path d="M8 16H3v5"></path>
-              </svg>
-              <span>Restore 27 Products</span>
-            </button>
-
-            <button type="button" class="btn-danger-outline" onclick="openDeleteAllProductsModal()" title="Delete all products from store catalog">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="3 6 5 6 21 6"></polyline>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-              </svg>
-              <span>Delete All</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Products Grid / Table Container -->
-        <div class="product-catalog-container" id="productCatalogContainer">
-          <!-- Injected dynamically via admin.js -->
-        </div>
-      </section>
-
-      <!-- TAB 2: PRODUCT CATEGORIES -->
-      <section class="tab-panel" id="panelCategories" style="display: none;">
-        <div class="categories-panel-wrapper">
-          
-          <!-- Curated Categories Info Card -->
-          <div class="settings-card" style="margin-bottom: 24px;">
-            <div class="settings-header">
-              <h3>Store Categories (Health &amp; Beauty/Wellness)</h3>
-              <p>Your store catalog is configured with two curated botanical collections: <strong>Health</strong> and <strong>Beauty/Wellness</strong>. All catalog products, storefront navigation pills, WhatsApp links, and search queries are organized into these two primary categories.</p>
-            </div>
-          </div>
-
-          <!-- Existing Categories Management -->
-          <div class="settings-card">
-            <div class="settings-header flex-between">
-              <div>
-                <h3>Store Categories Catalog</h3>
-                <p>Curated product collections for your herbal and wellness store.</p>
-              </div>
-              <button type="button" class="btn-secondary btn-sm" onclick="confirmResetCategories()" title="Restore the standard 2 categories">
-                Reset Standard Categories
-              </button>
-            </div>
-
-            <div class="categories-list-container" id="adminCategoriesList">
-              <!-- Dynamically populated via renderCategoriesManagement() -->
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- TAB 3: STORE SETTINGS & MARQUEE -->
-      <section class="tab-panel" id="panelSettings" style="display: none;">
-        <div class="settings-card">
-          <div class="settings-header">
-            <h3>Store Configuration &amp; Live Announcement</h3>
-            <p>Customize your contact lines, business numbers, bank payment details, and the announcement marquee that scrolls across the top of your store.</p>
-          </div>
-
-          <form id="storeSettingsForm" onsubmit="handleSaveSettings(event)">
-            <div class="settings-grid">
-              <div class="form-group">
-                <label for="cfgWhatsAppNumber">WhatsApp Business Number (International Format, no + sign)</label>
-                <input type="text" id="cfgWhatsAppNumber" placeholder="2348084765252" required />
-                <small class="form-hint">Used for all direct customer WhatsApp ordering buttons.</small>
-              </div>
-
-              <div class="form-group">
-                <label for="cfgPhoneDisplay">Phone Number (Customer Facing Display)</label>
-                <input type="text" id="cfgPhoneDisplay" placeholder="08084765252" required />
-                <small class="form-hint">Displayed in headers, footers, and contact sections.</small>
-              </div>
-
-              <div class="form-group">
-                <label for="cfgBankName">Store Official Bank Name</label>
-                <input type="text" id="cfgBankName" placeholder="Sterling Bank" />
-                <small class="form-hint">Included in WhatsApp invoices &amp; payment instructions.</small>
-              </div>
-
-              <div class="form-group">
-                <label for="cfgBankAccount">Bank Account Number (10 Digits)</label>
-                <input type="text" id="cfgBankAccount" placeholder="0097137583" />
-                <small class="form-hint">Official store bank account for payment transfers.</small>
-              </div>
-
-              <div class="form-group span-full">
-                <label for="cfgAccountName">Bank Account Beneficiary / Account Name</label>
-                <input type="text" id="cfgAccountName" placeholder="Ezema Emmanuel Tochukwu" />
-              </div>
-
-              <div class="form-group span-full">
-                <label for="cfgMarqueeText">Top Announcement Marquee Text (Continuous Right-to-Left Scroll)</label>
-                <textarea id="cfgMarqueeText" rows="3" required></textarea>
-                <small class="form-hint">This text displays in the continuous scrolling top banner. Highlight your hubs: Enugu, Abuja, Lagos &amp; nationwide delivery.</small>
-              </div>
-
-              <div class="form-group span-full">
-                <label for="cfgLocationText">Locations &amp; Delivery Summary Text</label>
-                <input type="text" id="cfgLocationText" placeholder="Enugu, Abuja & Lagos, Nigeria (Nationwide Delivery)" required />
-              </div>
-
-              <div class="form-group">
-                <label for="cfgFacebookUrl">Facebook Page URL</label>
-                <input type="url" id="cfgFacebookUrl" placeholder="https://www.facebook.com/..." />
-                <small class="form-hint">Displayed in customer footer social icons.</small>
-              </div>
-
-              <div class="form-group">
-                <label for="cfgInstagramUrl">Instagram Profile URL</label>
-                <input type="url" id="cfgInstagramUrl" placeholder="https://www.instagram.com/..." />
-                <small class="form-hint">Displayed in customer footer social icons.</small>
-              </div>
-
-              <div class="form-group span-full" style="border-top: 1px solid var(--color-border); padding-top: 18px; margin-top: 6px;">
-                <label for="cfgAdminPassword">Admin Dashboard Password (/admin)</label>
-                <input type="text" id="cfgAdminPassword" placeholder="tontobest82" style="font-family: monospace; font-weight: 600;" />
-                <small class="form-hint">Password used to authenticate at <strong>/admin</strong>. Default: <code>tontobest82</code>.</small>
-              </div>
-            </div>
-
-            <div class="settings-actions">
-              <button type="submit" class="btn-primary">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                  <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                  <polyline points="7 3 7 8 15 8"></polyline>
-                </svg>
-                <span>Save Store Configuration</span>
-              </button>
-            </div>
-          </form>
-        </div>
-
-        <!-- SUPABASE & CLOUD DATABASE INTEGRATION -->
-        <div class="settings-card" style="margin-top: 24px;">
-          <div class="settings-header flex-between" style="align-items: flex-start; flex-wrap: wrap; gap: 12px;">
-            <div>
-              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#009444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                  <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                  <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-                </svg>
-                <h3 style="margin: 0; font-size: 1.15rem; font-weight: 800; color: #111827;">Supabase Cloud Database &amp; Environment Variables</h3>
-              </div>
-              <p style="margin: 0; color: #64748b; font-size: 0.88rem;">
-                Connect your botanical store to Supabase PostgreSQL for persistent cloud storage, multi-device management, real-time inventory, and customer order records.
-              </p>
-            </div>
-            <div id="supabaseConnectionBadge" class="supabase-status-pill local">
-              <span class="status-indicator-dot"></span>
-              <span id="supabaseStatusText">Local Storage Mode</span>
-            </div>
-          </div>
-
-          <!-- Environment Variables Guidance Box -->
-          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 18px; margin-bottom: 20px;">
-            <div style="display: flex; align-items: flex-start; gap: 10px;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" style="flex-shrink: 0; margin-top: 2px;">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-              </svg>
-              <div style="font-size: 0.86rem; color: #334155; line-height: 1.5;">
-                <strong>Where to configure Environmental Variables:</strong>
-                <ul style="margin: 6px 0 0 0; padding-left: 18px;">
-                  <li><strong>In Google AI Studio:</strong> Open the <strong>Settings</strong> menu (top right) &rarr; select <strong>Environment Variables / Secrets</strong> &rarr; add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code>.</li>
-                  <li><strong>In Project Files:</strong> Edit the <code>.env</code> file directly in your workspace.</li>
-                  <li><strong>Instant Connect (Below):</strong> Or paste your credentials directly into the fields below to connect and test immediately without reloading!</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <form id="supabaseConfigForm" onsubmit="handleSaveSupabaseConfig(event)">
-            <div class="settings-grid">
-              <div class="form-group span-full">
-                <label for="cfgSupabaseUrl">
-                  Supabase Project URL (<code>VITE_SUPABASE_URL</code>)
-                </label>
-                <input 
-                  type="url" 
-                  id="cfgSupabaseUrl" 
-                  placeholder="https://your-project-id.supabase.co" 
-                  style="font-family: monospace;"
-                />
-                <small class="form-hint">
-                  Found in your Supabase Dashboard under <strong>Project Settings &rarr; API &rarr; Project URL</strong>.
-                </small>
-              </div>
-
-              <div class="form-group span-full">
-                <label for="cfgSupabaseAnonKey">
-                  Supabase Anon / Public API Key (<code>VITE_SUPABASE_ANON_KEY</code>)
-                </label>
-                <div style="position: relative; display: flex; align-items: center;">
-                  <input 
-                    type="password" 
-                    id="cfgSupabaseAnonKey" 
-                    placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." 
-                    style="font-family: monospace; padding-right: 75px; width: 100%;"
-                  />
-                  <button 
-                    type="button" 
-                    onclick="toggleSupabaseKeyVisibility()" 
-                    style="position: absolute; right: 8px; background: none; border: none; color: #64748b; font-size: 0.78rem; font-weight: 600; cursor: pointer; padding: 4px 8px; border-radius: 4px;"
-                  >
-                    Show/Hide
-                  </button>
-                </div>
-                <small class="form-hint">
-                  Found in your Supabase Dashboard under <strong>Project Settings &rarr; API &rarr; Project API keys &rarr; anon public</strong>.
-                </small>
-              </div>
-            </div>
-
-            <!-- Action buttons row -->
-            <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; align-items: center; justify-content: space-between;">
-              <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                <button type="button" class="btn-secondary" onclick="handleTestSupabaseConnection()" id="btnTestSupabase">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                  </svg>
-                  <span>Test Connection</span>
-                </button>
-
-                <button type="submit" class="btn-primary" id="btnSaveSupabase">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                  </svg>
-                  <span>Save &amp; Connect</span>
-                </button>
-
-                <button type="button" class="btn-secondary" onclick="handleClearSupabaseConfig()" style="color: #64748b;">
-                  Disconnect / Reset
-                </button>
-              </div>
-
-              <!-- SQL Schema View Button -->
-              <button type="button" class="btn-secondary" onclick="openSqlSchemaModal()" style="border-color: #009444; color: #009444; background: #f0fdf4;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="16 18 22 12 16 6"></polyline>
-                  <polyline points="8 6 2 12 8 18"></polyline>
-                </svg>
-                <span>View &amp; Copy SQL Script</span>
-              </button>
-            </div>
-          </form>
-
-          <!-- Supabase Synchronization Hub -->
-          <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
-            <h4 style="margin: 0 0 8px 0; font-size: 0.95rem; font-weight: 700; color: #1e293b;">Cloud Data Synchronization</h4>
-            <p style="margin: 0 0 14px 0; font-size: 0.84rem; color: #64748b;">
-              Easily migrate your local catalog (categories, store config, and all 27 botanical products) to Supabase in one click, or pull fresh changes from your database.
-            </p>
-            <div style="display: flex; flex-wrap: wrap; gap: 12px;">
-              <button type="button" class="btn-secondary" onclick="handlePushToSupabase()" id="btnPushSupabase">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="17 8 12 3 7 8"></polyline>
-                  <line x1="12" y1="3" x2="12" y2="15"></line>
-                </svg>
-                <span>Push Local Catalog to Supabase</span>
-              </button>
-
-              <button type="button" class="btn-secondary" onclick="handlePullFromSupabase()" id="btnPullSupabase">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                  <polyline points="7 10 12 15 17 10"></polyline>
-                  <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                <span>Pull Catalog from Supabase</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 4: EFFECTIVE WHATSAPP ORDER LINK & INVOICE STUDIO -->
-      <section class="tab-panel" id="panelWhatsApp" style="display: none;">
-        <div class="wa-studio-container">
-          
-          <div class="wa-studio-header">
-            <div>
-              <span class="studio-badge">⚡ Instant WhatsApp Commerce Engine</span>
-              <h3 class="studio-title" style="margin-top: 6px;">Effective WhatsApp Order Link &amp; Invoice Generator</h3>
-              <p class="studio-subtitle">Build customized itemized orders, calculate delivery fees for Lagos, Abuja, Enugu &amp; Nationwide, format payment bank instructions, and generate 1-click links or scannable QR codes.</p>
-            </div>
-          </div>
-
-          <div class="wa-studio-grid">
-            
-            <!-- LEFT COLUMN: ORDER BUILDER & CONTROLS -->
-            <div class="wa-builder-card">
-              
-              <!-- 1. Purpose / Scenario Selector -->
-              <div class="studio-section">
-                <label class="studio-section-label">1. Message Purpose &amp; Format</label>
-                <div class="template-selector-pills">
-                  <button type="button" class="wa-tmpl-pill active" id="tmplBtnInvoice" onclick="setWATemplate('invoice')">
-                    🧾 Full Order &amp; Invoice
-                  </button>
-                  <button type="button" class="wa-tmpl-pill" id="tmplBtnQuick" onclick="setWATemplate('quick_buy')">
-                    ⚡ Quick Product Buy Link
-                  </button>
-                  <button type="button" class="wa-tmpl-pill" id="tmplBtnDispatch" onclick="setWATemplate('dispatch')">
-                    🚚 Order Dispatched Notice
-                  </button>
-                  <button type="button" class="wa-tmpl-pill" id="tmplBtnReminder" onclick="setWATemplate('reminder')">
-                    💳 Payment Reminder
-                  </button>
-                </div>
-              </div>
-
-              <!-- 2. Routing Mode & Customer Contact -->
-              <div class="studio-section">
-                <label class="studio-section-label">2. Target Destination / Recipient</label>
-                <div class="routing-mode-selector">
-                  <label class="radio-card active" id="radioCardStore">
-                    <input type="radio" name="waRoutingMode" value="store" checked onchange="handleWARoutingModeChange()" />
-                    <div class="radio-card-body">
-                      <strong>Customer → Store WhatsApp</strong>
-                      <span>Direct link for social media bio, WhatsApp status, or for customers to send orders to your store.</span>
-                    </div>
-                  </label>
-                  <label class="radio-card" id="radioCardCustomer">
-                    <input type="radio" name="waRoutingMode" value="customer" onchange="handleWARoutingModeChange()" />
-                    <div class="radio-card-body">
-                      <strong>Store → Direct to Customer Phone</strong>
-                      <span>Chat directly to customer's WhatsApp with the pre-filled invoice &amp; payment instructions.</span>
-                    </div>
-                  </label>
-                </div>
-
-                <div class="form-row-2" style="margin-top: 14px;">
-                  <div class="form-group">
-                    <label for="waCustomerName">Customer Name (Optional)</label>
-                    <input type="text" id="waCustomerName" placeholder="e.g. Mrs. Chioma Eze" oninput="updateGeneratedWALink()" />
-                  </div>
-                  <div class="form-group" id="waCustomerPhoneWrapper">
-                    <label for="waCustomerPhone">Customer WhatsApp Number</label>
-                    <input type="tel" id="waCustomerPhone" placeholder="e.g. 08084765252 or 2348084765252" oninput="updateGeneratedWALink()" />
-                    <small class="form-hint" id="waPhoneHint">Required when chatting directly to customer.</small>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 3. Multi-Product Order Items Builder -->
-              <div class="studio-section" id="waItemsSection">
-                <div class="flex-between align-center" style="margin-bottom: 10px;">
-                  <label class="studio-section-label" style="margin-bottom: 0;">3. Items in Order / Invoice</label>
-                  <button type="button" class="btn-add-item-sm" onclick="addWAOrderItem()">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                    <span>Add Item</span>
-                  </button>
-                </div>
-
-                <div class="wa-order-items-list" id="waOrderItemsList">
-                  <!-- Dynamically rendered item rows -->
-                </div>
-              </div>
-
-              <!-- 4. Delivery Hub & Logistics -->
-              <div class="studio-section">
-                <label class="studio-section-label">4. Delivery Logistics &amp; City Hub</label>
-                <div class="form-row-2">
-                  <div class="form-group">
-                    <label for="waDeliveryHub">Fulfillment Hub / Destination</label>
-                    <select id="waDeliveryHub" onchange="handleDeliveryHubChange()">
-                      <option value="Lagos State" data-fee="2500">Lagos State Hub (₦2,500 standard delivery)</option>
-                      <option value="Abuja (FCT)" data-fee="3000">Abuja Hub (₦3,000 standard delivery)</option>
-                      <option value="Enugu State" data-fee="2000">Enugu Hub (₦2,000 standard delivery)</option>
-                      <option value="Nationwide Interstate" data-fee="4500">Other States Nationwide Delivery (₦4,500)</option>
-                      <option value="Free Delivery" data-fee="0">Free Delivery Promo (₦0)</option>
-                      <option value="Custom" data-fee="custom">Custom Location &amp; Fee...</option>
-                    </select>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="waDeliveryFee">Delivery Fee (₦)</label>
-                    <input type="number" id="waDeliveryFee" value="2500" min="0" step="500" oninput="updateGeneratedWALink()" />
-                  </div>
-                </div>
-
-                <div class="form-group" id="waCustomDestGroup" style="display: none; margin-top: 8px;">
-                  <label for="waCustomDestText">Specific Customer Address / Landmark</label>
-                  <input type="text" id="waCustomDestText" placeholder="e.g. Asaba, Delta State or 14 Adeola Odeku St, VI, Lagos" oninput="updateGeneratedWALink()" />
-                </div>
-              </div>
-
-              <!-- 5. Bank Account & Special Instructions -->
-              <div class="studio-section">
-                <div class="flex-between align-center" style="margin-bottom: 8px;">
-                  <label class="studio-section-label" style="margin-bottom: 0;">5. Store Payment Account</label>
-                  <label class="switch-label-compact">
-                    <input type="checkbox" id="waIncludeBank" checked onchange="updateGeneratedWALink()" />
-                    <span class="switch-slider-compact"></span>
-                    <span class="compact-text">Include Bank Details</span>
-                  </label>
-                </div>
-
-                <div class="bank-details-quick-preview" id="waBankQuickPreview">
-                  <span id="waBankNameDisp">Sterling Bank</span> • 
-                  <strong id="waBankAcctDisp">0097137583</strong> • 
-                  <span id="waBankBeneficiaryDisp">Ezema Emmanuel Tochukwu</span>
-                </div>
-
-                <div class="form-group" style="margin-top: 12px;">
-                  <label for="waCustomNotes">Special Order Notes / Instructions (Optional)</label>
-                  <input type="text" id="waCustomNotes" placeholder="e.g. Free herbal soap sample included • Handle with care • Urgent dispatch" oninput="updateGeneratedWALink()" />
-                </div>
-              </div>
-
-              <!-- 6. Automated Totals Bar -->
-              <div class="wa-totals-summary-bar">
-                <div class="summary-line">
-                  <span>Products Subtotal:</span>
-                  <strong id="waSummarySubtotal">₦0</strong>
-                </div>
-                <div class="summary-line">
-                  <span>Delivery Logistics:</span>
-                  <strong id="waSummaryDelivery">₦2,500</strong>
-                </div>
-                <div class="summary-line grand-total-line">
-                  <span>Total Order Amount:</span>
-                  <strong id="waSummaryTotal">₦2,500</strong>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- RIGHT COLUMN: LIVE WHATSAPP PREVIEW & ACTION HUB -->
-            <div class="wa-preview-column">
-              <div class="wa-preview-sticky-card">
-                
-                <div class="preview-header-bar">
-                  <div class="wa-contact-pill">
-                    <span class="wa-online-dot"></span>
-                    <div>
-                      <strong id="waPreviewRecipientTitle">Health is Wealth</strong>
-                      <span class="wa-online-status">Online • WhatsApp Official Business</span>
-                    </div>
-                  </div>
-                  <span class="preview-badge">Live Chat Preview</span>
-                </div>
-
-                <!-- Chat Bubble Container -->
-                <div class="wa-chat-bubble-container">
-                  <div class="wa-chat-bubble" id="waChatBubblePreview">
-                    <!-- Formatted text injected dynamically -->
-                  </div>
-                </div>
-
-                <!-- Action Controls -->
-                <div class="wa-action-controls-box">
-                  
-                  <div class="wa-primary-action-row">
-                    <button type="button" class="btn-wa-action-primary" id="waMainActionBtn" onclick="openGeneratedWALink()">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.073.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/>
-                      </svg>
-                      <span id="waMainActionText">Open in WhatsApp</span>
-                    </button>
-                  </div>
-
-                  <div class="wa-secondary-actions-grid">
-                    <button type="button" class="btn-wa-secondary" onclick="copyGeneratedWALink()">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                      </svg>
-                      <span>Copy Link</span>
-                    </button>
-
-                    <button type="button" class="btn-wa-secondary" onclick="copyGeneratedWAMessageText()">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                      </svg>
-                      <span>Copy Text</span>
-                    </button>
-
-                    <button type="button" class="btn-wa-secondary" onclick="toggleWAQRCode()">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="3" y="3" width="7" height="7"></rect>
-                        <rect x="14" y="3" width="7" height="7"></rect>
-                        <rect x="14" y="14" width="7" height="7"></rect>
-                        <rect x="3" y="14" width="7" height="7"></rect>
-                      </svg>
-                      <span>QR Code</span>
-                    </button>
-                  </div>
-
-                  <!-- Generated URL display box -->
-                  <div class="wa-url-field-box" style="margin-top: 12px;">
-                    <label class="url-field-label">Direct WhatsApp URL:</label>
-                    <input type="text" id="waGeneratedUrl" readonly />
-                  </div>
-
-                  <!-- QR Code Dropdown Card -->
-                  <div class="wa-qr-display-card" id="waQRCard" style="display: none;">
-                    <div class="qr-card-header">
-                      <strong>Scan to Open Order on Phone</strong>
-                      <button type="button" class="btn-close-qr" onclick="toggleWAQRCode()">✕</button>
-                    </div>
-                    <div class="qr-image-wrapper">
-                      <img id="waQRImage" src="" alt="WhatsApp QR Code" />
-                    </div>
-                    <p class="qr-hint">Scan with camera on any smartphone to instantly launch WhatsApp with this order pre-loaded.</p>
-                  </div>
-
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <!-- ======================================================================
-       3. ADD / EDIT PRODUCT MODAL
-       ====================================================================== -->
-  <div class="admin-modal product-editor-modal" id="productModal" style="display: none;" onclick="if (event.target === this) closeProductModal()">
-    <div class="modal-backdrop" onclick="closeProductModal()"></div>
-    <div class="modal-dialog product-editor-dialog" onclick="event.stopPropagation()">
-      <form id="productForm" onsubmit="handleSaveProduct(event)">
-        <input type="hidden" id="editProductId" value="" />
-      
-        <!-- Top Modal Action Bar -->
-        <div class="modal-header editor-header">
-          <div class="editor-header-left">
-            <div class="editor-breadcrumb">
-              <span class="crumb-root">Catalog</span>
-              <span class="crumb-sep">/</span>
-              <span class="crumb-section">Products</span>
-              <span class="crumb-sep">/</span>
-              <span class="crumb-current" id="editorBreadcrumbTitle">Edit Product</span>
-            </div>
-            <div class="editor-title-row">
-              <h2 class="editor-title" id="modalTitle">Edit Product</h2>
-              <span class="editor-status-badge in-stock" id="editorHeaderStatusBadge">
-                <span class="status-dot"></span>
-                <span id="editorHeaderStatusText">In Stock</span>
-              </span>
-            </div>
-          </div>
-
-          <div class="editor-header-actions">
-            <button type="button" class="btn-scroll-jump" onclick="scrollEditorToBottom()" title="Jump to pricing, stock and bottom fields">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M12 5v14M19 12l-7 7-7-7"/>
-              </svg>
-              <span>Scroll to Bottom</span>
-            </button>
-            <button type="button" class="btn-danger-outline" id="btnDeleteFromEditModal" style="display: none;" onclick="openDeleteModalFromEdit()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="3 6 5 6 21 6"></polyline>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-              </svg>
-              <span>Delete</span>
-            </button>
-            <button type="button" class="btn-editor-secondary" onclick="closeProductModal()">
-              Discard
-            </button>
-            <button type="submit" class="btn-editor-primary" id="saveProductBtnTop">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-              <span id="saveProductBtnTopText">Save Changes</span>
-            </button>
-            <button type="button" class="btn-close-modal" onclick="closeProductModal()" aria-label="Close modal">✕</button>
-          </div>
-        </div>
-
-        <!-- Scrollable Modal Body (Shows All Contents) -->
-        <div class="editor-body-scroll" id="productModalBodyScroll">
-          <div class="editor-grid">
-            
-            <!-- LEFT / PRIMARY CONTENT COLUMN (62%) -->
-            <div class="editor-main-col">
-              
-              <!-- Card 1: Essential Information -->
-              <div class="editor-card">
-                <div class="editor-card-header">
-                  <div class="card-icon-pill">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 class="editor-card-title">General Information</h3>
-                    <p class="editor-card-desc">Title, store category, and promotional highlight</p>
-                  </div>
-                </div>
-
-                <div class="editor-card-body">
-                  <div class="form-group">
-                    <label for="prodName" class="editor-label">
-                      <span>Product Title <span class="required">*</span></span>
-                      <span class="label-hint">Shown across store &amp; WhatsApp messages</span>
-                    </label>
-                    <input type="text" id="prodName" required placeholder="e.g. Pure Botanical Facial Radiance Elixir" class="editor-input" oninput="updateLiveStorePreview()" />
-                  </div>
-
-                  <div class="form-row-2">
-                    <div class="form-group">
-                      <label for="prodCategory" class="editor-label">
-                        <span>Store Category <span class="required">*</span></span>
-                      </label>
-                      <div class="select-wrapper">
-                        <select id="prodCategory" required class="editor-select" onchange="updateLiveStorePreview()">
-                          <option value="Health">Health</option>
-                          <option value="Beauty/Wellness">Beauty/Wellness</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="prodTag" class="editor-label">
-                        <span>Badge / Tag</span>
-                        <span class="label-hint">Pill overlay</span>
-                      </label>
-                      <div class="select-wrapper">
-                        <select id="prodTag" class="editor-select" onchange="updateLiveStorePreview()">
-                          <option value="">No Badge</option>
-                          <option value="Bestseller">★ Bestseller</option>
-                          <option value="Popular">🔥 Popular</option>
-                          <option value="New">✨ New Arrival</option>
-                          <option value="Sale">🏷️ Special Sale</option>
-                          <option value="Gentle">🌿 Gentle Care</option>
-                          <option value="Hydrate">💧 Hydrating</option>
-                          <option value="Energy">⚡ Energy Booster</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="prodDesc" class="editor-label">
-                      <span>Description</span>
-                      <span class="label-hint">Previews on catalog cards and shows in full detail on click</span>
-                    </label>
-                    <textarea id="prodDesc" rows="5" placeholder="Enter product botanical formulation, ingredients, and daily usage ritual..." class="editor-textarea" oninput="updateLiveStorePreview()"></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Card 2: Product Photography & Media -->
-              <div class="editor-card">
-                <div class="editor-card-header">
-                  <div class="card-icon-pill">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                      <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                      <polyline points="21 15 16 10 5 21"></polyline>
-                    </svg>
-                  </div>
-                  <div style="flex: 1;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                      <h3 class="editor-card-title">Product Photography</h3>
-                      <span class="badge-pill-soft">Phone Gallery, Camera or PC</span>
-                    </div>
-                    <p class="editor-card-desc">Clear botanical photos maximize customer trust and WhatsApp orders</p>
-                  </div>
-                </div>
-
-                <div class="editor-card-body">
-                  <!-- Hidden File & Value Inputs -->
-                  <input type="file" id="prodImageFileInput" accept="image/*" style="display: none;" onchange="handleProductFileSelect(event)" />
-                  <input type="hidden" id="prodImage" value="" />
-
-                  <!-- Professional File Dropzone -->
-                  <div 
-                    class="file-dropzone professional-dropzone" 
-                    id="productFileDropzone" 
-                    onclick="triggerProductFileInput()"
-                    ondragover="handleProductDragOver(event)"
-                    ondragleave="handleProductDragLeave(event)"
-                    ondrop="handleProductFileDrop(event)"
-                  >
-                    <div class="dropzone-icon-pro">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="17 8 12 3 7 8"></polyline>
-                        <line x1="12" y1="3" x2="12" y2="15"></line>
-                      </svg>
-                    </div>
-                    <div class="dropzone-content-pro">
-                      <span class="dropzone-main-text"><strong>Click to select photo</strong> or drag &amp; drop here</span>
-                      <span class="dropzone-sub-text">Choose from phone camera roll, take a snapshot, or upload from PC</span>
-                    </div>
-                    <div class="dropzone-badge-list">
-                      <span class="dz-badge">⚡ Auto-compressed for speed</span>
-                      <span class="dz-badge">📱 Mobile &amp; WhatsApp ready</span>
-                    </div>
-                  </div>
-
-                  <!-- Active Image Loaded Preview Container -->
-                  <div class="image-preview-pro" id="productImagePreviewContainer" style="display: none;">
-                    <div class="preview-media-frame">
-                      <img id="productImageThumb" src="" alt="Product Photo Preview" />
-                      <span class="media-live-badge">Catalog Photo</span>
-                    </div>
-                    <div class="preview-info-col">
-                      <div class="preview-info-header">
-                        <div>
-                          <h4 class="preview-photo-title" id="productImageMetaName">Botanical Photo Attached</h4>
-                          <div class="preview-photo-status" id="productImageMetaStatus">✓ Ready for customer storefront</div>
-                        </div>
-                      </div>
-                      <div class="preview-info-actions">
-                        <button type="button" class="btn-action-pro btn-replace" onclick="triggerProductFileInput()">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
-                          </svg>
-                          <span>Change Photo</span>
-                        </button>
-                        <button type="button" class="btn-action-pro btn-remove" onclick="clearProductPhoto()">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                          </svg>
-                          <span>Remove</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Image URL Paste Option -->
-                  <div class="media-alternative-options">
-                    <div class="url-toggle-row">
-                      <button type="button" class="url-fallback-toggle" id="btnToggleUrlInput" onclick="toggleProductUrlInput()">
-                        🔗 Or paste image web address URL
-                      </button>
-                    </div>
-                    <div id="productUrlInputWrap" style="display: none; margin-top: 8px;">
-                      <div class="url-input-group">
-                        <input 
-                          type="url" 
-                          id="prodImageUrlManual" 
-                          placeholder="https://images.unsplash.com/... or web image link" 
-                          class="editor-input"
-                          oninput="handleManualUrlInput(this.value)" 
-                        />
-                        <button type="button" class="btn-url-load" onclick="handleManualUrlInput(document.getElementById('prodImageUrlManual').value)">
-                          Apply
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- RIGHT / SIDEBAR COLUMN (38%) -->
-            <div class="editor-side-col">
-
-              <!-- Card 4: Real-Time Storefront Live Card Preview -->
-              <div class="editor-card preview-card-wrapper">
-                <div class="editor-card-header">
-                  <div class="card-icon-pill green">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                      <circle cx="12" cy="12" r="3"></circle>
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 class="editor-card-title">Live Storefront Preview</h3>
-                    <p class="editor-card-desc">Real-time customer view</p>
-                  </div>
-                </div>
-
-                <div class="editor-card-body preview-card-body">
-                  <!-- High-Fidelity Storefront Mini Card Mockup -->
-                  <div class="storefront-card-mockup" id="storefrontCardMockup">
-                    <div class="mockup-img-wrap">
-                      <img id="mockupImg" src="https://i.ibb.co/fzC47YSs/IMG-20251123-WA0004-1.jpg" alt="Preview Image" />
-                      <span class="mockup-badge" id="mockupTagBadge" style="display: none;">Bestseller</span>
-                      <span class="mockup-stock-pill in-stock" id="mockupStockPill">In Stock</span>
-                    </div>
-                    <div class="mockup-content">
-                      <span class="mockup-cat" id="mockupCat">Health</span>
-                      <h4 class="mockup-title" id="mockupTitle">Product Title</h4>
-                      <p class="mockup-desc" id="mockupDesc">Short botanical summary formulation...</p>
-                      <div class="mockup-price-row">
-                        <div class="mockup-prices">
-                          <span class="mockup-price" id="mockupPrice">₦15,000</span>
-                          <span class="mockup-old-price" id="mockupOldPrice" style="display: none;">₦18,000</span>
-                        </div>
-                        <span class="mockup-discount-badge" id="mockupDiscountBadge" style="display: none;">17% OFF</span>
-                      </div>
-                      <div class="mockup-wa-button">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.086.275.073.376-.044.101-.116.433-.506.549-.68.116-.173.231-.144.39-.086s1.011.477 1.184.564.289.13.332.203c.043.072.043.419-.101.824z"/>
-                        </svg>
-                        <span>Order on WhatsApp</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Card 5: Pricing & Savings Calculator -->
-              <div class="editor-card">
-                <div class="editor-card-header">
-                  <div class="card-icon-pill">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <line x1="12" y1="1" x2="12" y2="23"></line>
-                      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 class="editor-card-title">Pricing &amp; Value</h3>
-                    <p class="editor-card-desc">Nigerian Naira (₦) price settings</p>
-                  </div>
-                </div>
-
-                <div class="editor-card-body">
-                  <div class="form-group">
-                    <label for="prodPrice" class="editor-label">
-                      <span>Selling Price (₦) <span class="required">*</span></span>
-                    </label>
-                    <div class="currency-input-wrapper">
-                      <span class="currency-prefix">₦</span>
-                      <input type="text" id="prodPrice" required placeholder="15,000" class="editor-input currency-input" oninput="formatPriceInput(this); updateLiveStorePreview();" />
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="prodOldPrice" class="editor-label">
-                      <span>Original Strikethrough Price (₦)</span>
-                      <span class="label-hint">Optional</span>
-                    </label>
-                    <div class="currency-input-wrapper">
-                      <span class="currency-prefix">₦</span>
-                      <input type="text" id="prodOldPrice" placeholder="18,000" class="editor-input currency-input" oninput="formatPriceInput(this); updateLiveStorePreview();" />
-                    </div>
-                  </div>
-
-                  <!-- Dynamic Savings Insight Badge -->
-                  <div class="pricing-insight-card" id="pricingInsightCard" style="display: none;">
-                    <div class="insight-badge" id="insightSavingsBadge">Save ₦3,000 (17% OFF)</div>
-                    <p class="insight-sub" id="insightSavingsText">Customers see this discounted offer with a prominent savings badge.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Card 6: Availability & Storefront Status -->
-              <div class="editor-card">
-                <div class="editor-card-header">
-                  <div class="card-icon-pill">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 class="editor-card-title">Status &amp; Visibility</h3>
-                    <p class="editor-card-desc">Control product sales and prominence</p>
-                  </div>
-                </div>
-
-                <div class="editor-card-body">
-                  <!-- Stock Switch -->
-                  <div class="status-toggle-card">
-                    <div class="toggle-meta">
-                      <span class="toggle-title">Stock Status</span>
-                      <span class="toggle-desc" id="stockStatusDescription">Product can be ordered via WhatsApp</span>
-                    </div>
-                    <label class="switch-pro">
-                      <input type="checkbox" id="prodInStock" checked onchange="updateLiveStorePreview()" />
-                      <span class="slider-pro"></span>
-                    </label>
-                  </div>
-                  <div class="stock-pill-row">
-                    <span class="stock-active-pill in-stock" id="prodInStockLabel">In Stock (Available)</span>
-                  </div>
-
-                  <!-- Featured Switch -->
-                  <div class="status-toggle-card" style="margin-top: 12px;">
-                    <div class="toggle-meta">
-                      <span class="toggle-title">Featured Product</span>
-                      <span class="toggle-desc">Showcase in top store recommendations</span>
-                    </div>
-                    <label class="switch-pro">
-                      <input type="checkbox" id="prodFeatured" onchange="updateLiveStorePreview()" />
-                      <span class="slider-pro"></span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Professional Bottom Action Bar with Save & Discard -->
-        <div class="editor-footer">
-          <div class="footer-left">
-            <button type="button" class="btn-back-to-catalog" onclick="closeProductModal()" style="padding: 7px 12px; font-size: 0.82rem;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-              </svg>
-              <span>Back to Products</span>
-            </button>
-            <button type="button" class="btn-scroll-jump" onclick="scrollEditorToTop()" title="Scroll back to the top of the form">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M12 19V5M5 12l7-7 7 7"/>
-              </svg>
-              <span>Back to Top</span>
-            </button>
-            <button type="button" class="btn-danger-outline" id="btnDeleteFromEditModalFooter" style="display: none;" onclick="openDeleteModalFromEdit()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="3 6 5 6 21 6"></polyline>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-              </svg>
-              <span>Delete Product</span>
-            </button>
-            <div class="keyboard-tip">
-              <span class="kbd-key">Ctrl/Cmd</span> + <span class="kbd-key">S</span> to save anytime
-            </div>
-          </div>
-
-          <div class="footer-right">
-            <button type="button" class="btn-editor-secondary" onclick="closeProductModal()">
-              Discard Changes
-            </button>
-            <button type="submit" class="btn-editor-primary" id="saveProductBtn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-              <span id="saveProductBtnText">Save Changes</span>
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ======================================================================
-       4. EDIT CATEGORY MODAL
-       ====================================================================== -->
-  <div class="admin-modal" id="editCategoryModal" style="display: none;">
-    <div class="modal-backdrop" onclick="closeEditCategoryModal()"></div>
-    <div class="modal-dialog" style="max-width: 480px;">
-      <div class="modal-header">
-        <h3>Edit Product Category</h3>
-        <button type="button" class="btn-close-modal" onclick="closeEditCategoryModal()" aria-label="Close modal">✕</button>
-      </div>
-
-      <form id="editCategoryForm" onsubmit="handleSaveEditedCategory(event)">
-        <input type="hidden" id="editCategoryOldName" value="" />
-        <div class="modal-body-scroll">
-          <div class="form-group">
-            <label for="editCategoryNewName">Category Name *</label>
-            <input type="text" id="editCategoryNewName" required maxlength="40" placeholder="e.g. Herbal Teas &amp; Remedies" />
-          </div>
-
-          <div class="form-group">
-            <label class="checkbox-label" style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
-              <input type="checkbox" id="editCategorySyncProducts" checked style="margin-top: 3px;" />
-              <span style="font-size: 0.88rem; color: #1f2937;">Automatically update all products currently in this category to the new name</span>
-            </label>
-            <small class="form-hint" id="editCategoryCountNotice" style="display: block; margin-top: 4px; color: #059669;">
-              <!-- Dynamic count notice -->
-            </small>
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn-secondary" onclick="closeEditCategoryModal()">Cancel</button>
-          <button type="submit" class="btn-primary">Save Category</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ======================================================================
-       5. DELETE CATEGORY MODAL
-       ====================================================================== -->
-  <div class="admin-modal" id="deleteCategoryModal" style="display: none;">
-    <div class="modal-backdrop" onclick="closeDeleteCategoryModal()"></div>
-    <div class="modal-dialog" style="max-width: 480px;">
-      <div class="modal-header">
-        <h3 style="color: #dc2626;">Delete Category</h3>
-        <button type="button" class="btn-close-modal" onclick="closeDeleteCategoryModal()" aria-label="Close modal">✕</button>
-      </div>
-
-      <form id="deleteCategoryForm" onsubmit="handleConfirmDeleteCategory(event)">
-        <input type="hidden" id="deleteCategoryTargetName" value="" />
-        <div class="modal-body-scroll">
-          <p id="deleteCategoryWarningText" style="font-weight: 600; margin-bottom: 14px; color: #111827; font-size: 0.95rem;">
-            Are you sure you want to delete this category?
-          </p>
-
-          <div id="deleteCategoryReassignBox" class="form-group" style="display: none;">
-            <label for="deleteCategoryReassignSelect">Reassign Existing Products To:</label>
-            <select id="deleteCategoryReassignSelect">
-              <!-- Populated dynamically with other categories -->
-            </select>
-            <small class="form-hint" style="margin-top: 6px;">
-              Products currently in this category will be smoothly reassigned to your chosen category so no products are lost.
-            </small>
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn-secondary" onclick="closeDeleteCategoryModal()">Cancel</button>
-          <button type="submit" class="btn-danger" id="btnDeleteCategorySubmit">Delete Category</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ======================================================================
-       6. DELETE SINGLE PRODUCT MODAL
-       ====================================================================== -->
-  <div class="admin-modal" id="deleteProductModal" style="display: none;">
-    <div class="modal-backdrop" onclick="closeDeleteProductModal()"></div>
-    <div class="modal-dialog" style="max-width: 480px;">
-      <div class="modal-header">
-        <h3 style="color: #dc2626; display: flex; align-items: center; gap: 8px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="3 6 5 6 21 6"></polyline>
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-          </svg>
-          <span>Delete Product</span>
-        </h3>
-        <button type="button" class="btn-close-modal" onclick="closeDeleteProductModal()" aria-label="Close modal">✕</button>
-      </div>
-
-      <form id="deleteProductForm" onsubmit="handleConfirmDeleteProduct(event)">
-        <input type="hidden" id="deleteProductTargetId" value="" />
-        <div class="modal-body-scroll">
-          <div style="display: flex; gap: 14px; align-items: center; background: #f9fafb; padding: 12px; border-radius: 8px; border: 1px solid #e5e7eb; margin-bottom: 14px;">
-            <img id="deleteProductPreviewImg" src="" alt="" style="width: 56px; height: 56px; object-fit: cover; border-radius: 6px; border: 1px solid #d1d5db; background: #fff;" onerror="this.src='https://images.unsplash.com/photo-1608248597359-2e11894d0fb8?auto=format&fit=crop&w=800&q=80'" />
-            <div style="flex: 1; min-width: 0;">
-              <h4 id="deleteProductNameText" style="font-size: 0.95rem; font-weight: 700; color: #111827; margin: 0 0 4px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Product Name</h4>
-              <div style="display: flex; gap: 8px; align-items: center; font-size: 0.82rem;">
-                <span id="deleteProductCategoryText" style="background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 4px; font-weight: 600;">Category</span>
-                <span id="deleteProductPriceText" style="font-weight: 700; color: #059669;">₦0</span>
-              </div>
-            </div>
-          </div>
-
-          <p style="color: #4b5563; font-size: 0.92rem; line-height: 1.5; margin: 0;">
-            Are you sure you want to permanently delete this product from your catalog? This will remove it from the live store catalog and WhatsApp ordering immediately.
-          </p>
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn-secondary" onclick="closeDeleteProductModal()">Cancel</button>
-          <button type="submit" class="btn-danger" id="btnConfirmDeleteProduct">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="3 6 5 6 21 6"></polyline>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-            </svg>
-            <span>Yes, Delete Product</span>
+          <button type="button" id="btnLogoutSidebar" style="background:none; border:none; color: #94a3b8; cursor: pointer; padding: 4px;" title="Logout">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
           </button>
         </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ======================================================================
-       7. DELETE ALL PRODUCTS MODAL
-       ====================================================================== -->
-  <div class="admin-modal" id="deleteAllProductsModal" style="display: none;">
-    <div class="modal-backdrop" onclick="closeDeleteAllProductsModal()"></div>
-    <div class="modal-dialog" style="max-width: 480px;">
-      <div class="modal-header">
-        <h3 style="color: #dc2626; display: flex; align-items: center; gap: 8px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="3 6 5 6 21 6"></polyline>
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-          </svg>
-          <span>Delete All Products</span>
-        </h3>
-        <button type="button" class="btn-close-modal" onclick="closeDeleteAllProductsModal()" aria-label="Close modal">✕</button>
       </div>
+    </aside>
 
-      <form id="deleteAllProductsForm" onsubmit="handleConfirmDeleteAllProducts(event)">
-        <div class="modal-body-scroll">
-          <div style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; padding: 14px; margin-bottom: 14px;">
-            <p style="color: #991b1b; font-weight: 700; font-size: 0.95rem; margin: 0 0 6px 0;">Warning: Destructive Action</p>
-            <p style="color: #7f1d1d; font-size: 0.88rem; margin: 0; line-height: 1.45;">
-              This will permanently delete all products currently in your catalog. You can restore the 27 curated botanical products at any time using the "Restore 27 Products" button.
-            </p>
+    <!-- MAIN WRAPPER -->
+    <div class="admin-main-wrap">
+      <!-- TOP HEADER -->
+      <header class="admin-header">
+        <div class="header-left">
+          <button type="button" class="header-mobile-toggle" id="mobileMenuBtn" aria-label="Toggle navigation drawer">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <h1 class="header-page-title" id="pageTitle">Dashboard Overview</h1>
+        </div>
+
+        <div class="header-right">
+          <div class="supabase-status-badge" id="supabaseLiveBadge" title="Supabase Cloud Database Status">
+            <span class="status-dot-pulse"></span>
+            <span id="supabaseStatusText">Supabase Connected</span>
           </div>
-        </div>
 
-        <div class="modal-footer">
-          <button type="button" class="btn-secondary" onclick="closeDeleteAllProductsModal()">Cancel</button>
-          <button type="submit" class="btn-danger" id="btnConfirmDeleteAllProducts">Yes, Delete All Products</button>
+          <a href="/" target="_blank" class="btn btn-secondary btn-sm" style="display: inline-flex;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            <span>Live Site</span>
+          </a>
+
+          <button type="button" id="btnHeaderLogout" class="btn btn-secondary btn-sm" title="Log out">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            <span>Logout</span>
+          </button>
         </div>
-      </form>
+      </header>
+
+      <!-- MAIN CONTENT VIEW -->
+      <main class="admin-content-view">
+
+        <!-- ===============================================================
+             PANEL 1: DASHBOARD OVERVIEW
+             =============================================================== -->
+        <section class="admin-panel active" id="panel-dashboard">
+          <!-- STATS CARDS -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-label">Total Products</span>
+                <div class="stat-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                </div>
+              </div>
+              <div class="stat-value" id="statTotalProducts">0</div>
+              <div class="stat-subtext" id="statActiveProducts">0 in stock</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-label">Active Categories</span>
+                <div class="stat-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                </div>
+              </div>
+              <div class="stat-value" id="statTotalCategories">0</div>
+              <div class="stat-subtext">Health &amp; Beauty collections</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-label">Customer Orders</span>
+                <div class="stat-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                </div>
+              </div>
+              <div class="stat-value" id="statTotalOrders">0</div>
+              <div class="stat-subtext" id="statPendingOrders">0 pending fulfillment</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-label">Order Volume</span>
+                <div class="stat-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+              </div>
+              <div class="stat-value" id="statTotalRevenue">₦0</div>
+              <div class="stat-subtext">Recorded Supabase transactions</div>
+            </div>
+          </div>
+
+          <!-- QUICK ACTIONS BAR -->
+          <div class="card" style="margin-bottom: 2rem;">
+            <div class="card-header">
+              <h2 class="card-title">Quick Administration Actions</h2>
+            </div>
+            <div class="card-body" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <button type="button" class="btn btn-primary" onclick="openAddProductModal()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>Add New Product</span>
+              </button>
+              <button type="button" class="btn btn-secondary" onclick="openAddCategoryModal()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>Add Category</span>
+              </button>
+              <button type="button" class="btn btn-secondary" onclick="switchView('media')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                <span>Upload Media</span>
+              </button>
+              <button type="button" class="btn btn-secondary" onclick="switchView('settings')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span>Store &amp; Bank Settings</span>
+              </button>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 1.5rem;">
+            <!-- RECENT ORDERS CARD -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Recent Customer Orders</h3>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="switchView('orders')">View All</button>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Ref</th>
+                      <th>Customer</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashboardRecentOrdersTable">
+                    <tr><td colspan="4" style="text-align: center; color: #94a3b8; padding: 2rem;">Loading orders...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- FEATURED PRODUCTS CARD -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Homepage Featured Formulations</h3>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="switchView('products')">Manage</button>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Category</th>
+                      <th>Price</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashboardFeaturedProductsTable">
+                    <tr><td colspan="4" style="text-align: center; color: #94a3b8; padding: 2rem;">Loading products...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===============================================================
+             PANEL 2: PRODUCT MANAGEMENT
+             =============================================================== -->
+        <section class="admin-panel" id="panel-products">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Product Inventory &amp; Pricing</h2>
+                <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Synchronized live with Supabase `products` table</div>
+              </div>
+              <div class="card-actions">
+                <button type="button" class="btn btn-primary" onclick="openAddProductModal()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  <span>Add Product</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <!-- Filter & Search Controls -->
+              <div class="filter-bar">
+                <div class="search-input-wrapper">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input type="text" id="productSearchInput" class="form-control" placeholder="Search by name, ID, or description..." />
+                </div>
+
+                <select id="productCategoryFilter" class="filter-select">
+                  <option value="">All Categories</option>
+                </select>
+
+                <select id="productStockFilter" class="filter-select">
+                  <option value="">All Stock Status</option>
+                  <option value="in_stock">In Stock Only</option>
+                  <option value="out_of_stock">Out of Stock</option>
+                </select>
+
+                <select id="productFeaturedFilter" class="filter-select">
+                  <option value="">All Visibility</option>
+                  <option value="featured">Featured on Homepage</option>
+                </select>
+
+                <select id="productSortBy" class="filter-select">
+                  <option value="id_asc">Sort: ID (Ascending)</option>
+                  <option value="name_asc">Sort: Product Name (A-Z)</option>
+                  <option value="price_asc">Sort: Price (Low to High)</option>
+                  <option value="price_desc">Sort: Price (High to Low)</option>
+                </select>
+              </div>
+
+              <!-- Products Table -->
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 50px;">Media</th>
+                      <th>Product Name</th>
+                      <th>Category</th>
+                      <th>Price (NGN)</th>
+                      <th>In Stock</th>
+                      <th>Featured</th>
+                      <th style="text-align: right;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="productsTableBody">
+                    <tr><td colspan="7" style="text-align: center; color: #94a3b8; padding: 2rem;">Loading products from Supabase...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; font-size: 0.8rem; color: #64748b;">
+                <span id="productPaginationText">Showing 0 products</span>
+                <span>All changes update Supabase immediately</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===============================================================
+             PANEL 3: CATEGORY MANAGEMENT
+             =============================================================== -->
+        <section class="admin-panel" id="panel-categories">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Store Categories &amp; Collections</h2>
+                <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Synchronized with Supabase `categories` table</div>
+              </div>
+              <div class="card-actions">
+                <button type="button" class="btn btn-primary" onclick="openAddCategoryModal()">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                  <span>Add Category</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 60px;">Index</th>
+                      <th>Category Name</th>
+                      <th>Associated Products</th>
+                      <th>Status</th>
+                      <th style="text-align: right;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="categoriesTableBody">
+                    <tr><td colspan="5" style="text-align: center; color: #94a3b8; padding: 2rem;">Loading categories...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===============================================================
+             PANEL 4: CUSTOMER ORDERS & ENQUIRIES
+             =============================================================== -->
+        <section class="admin-panel" id="panel-orders">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Customer Orders &amp; WhatsApp Enquiries</h2>
+                <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Stored in Supabase `orders` table</div>
+              </div>
+              <div class="card-actions">
+                <button type="button" class="btn btn-secondary btn-sm" id="btnRefreshOrders">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                  <span>Refresh</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="filter-bar">
+                <div class="search-input-wrapper">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input type="text" id="orderSearchInput" class="form-control" placeholder="Search by customer name, phone, or order ID..." />
+                </div>
+
+                <select id="orderStatusFilter" class="filter-select">
+                  <option value="">All Statuses</option>
+                  <option value="pending">Pending</option>
+                  <option value="confirmed">Confirmed</option>
+                  <option value="dispatched">Dispatched</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Date</th>
+                      <th>Customer</th>
+                      <th>Delivery Location</th>
+                      <th>Items</th>
+                      <th>Total</th>
+                      <th>Status</th>
+                      <th style="text-align: right;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ordersTableBody">
+                    <tr><td colspan="8" style="text-align: center; color: #94a3b8; padding: 2rem;">Loading orders from Supabase...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===============================================================
+             PANEL 5: WEBSITE CONTENT & HERO ANNOUNCEMENTS
+             =============================================================== -->
+        <section class="admin-panel" id="panel-content">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Live Website Content &amp; Announcements</h2>
+                <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Stored in Supabase `store_config` table</div>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <form id="contentSettingsForm">
+                <div class="form-group">
+                  <label class="form-label" for="marqueeTextInput">Top Marquee Announcement Banner</label>
+                  <input type="text" id="marqueeTextInput" class="form-control" placeholder="Welcome to Health is Wealth • 100% Pure Natural Botanical Formulations" />
+                  <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.35rem;">Live Preview: <strong id="marqueePreview" style="color: #059669;"></strong></div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="storeLocationInput">Operating Dispatch Locations</label>
+                    <input type="text" id="storeLocationInput" class="form-control" placeholder="Enugu, Abuja & Lagos, Nigeria (Nationwide Delivery)" />
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label" for="currencySymbolInput">Currency Symbol</label>
+                    <input type="text" id="currencySymbolInput" class="form-control" value="₦" />
+                  </div>
+                </div>
+
+                <button type="submit" id="btnSaveContent" class="btn btn-primary" style="margin-top: 0.5rem;">
+                  <span>Save Content to Supabase</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===============================================================
+             PANEL 6: MEDIA STORAGE & IMAGE MANAGER
+             =============================================================== -->
+        <section class="admin-panel" id="panel-media">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Media Storage &amp; Image Assets</h2>
+                <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Upload and copy image URLs for product listings</div>
+              </div>
+              <div class="card-actions">
+                <span id="mediaCountText" style="font-size: 0.8rem; color: #64748b;">0 images</span>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <!-- Dropzone -->
+              <div class="media-dropzone" id="mediaDropzone">
+                <input type="file" id="mediaFileInput" accept="image/*" style="display: none;" />
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" style="margin-bottom: 0.75rem;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                <div style="font-weight: 700; color: #0f172a; font-size: 0.95rem;">Drag &amp; drop an image here or click to browse</div>
+                <div style="font-size: 0.75rem; color: #64748b; margin-top: 0.25rem;">Supported: JPG, PNG, WebP, GIF (Max 5MB)</div>
+              </div>
+
+              <!-- Media Gallery Grid -->
+              <div class="media-grid" id="mediaGalleryGrid">
+                <!-- Dynamically rendered -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===============================================================
+             PANEL 7: STORE SETTINGS & STERLING BANK ACCOUNT
+             =============================================================== -->
+        <section class="admin-panel" id="panel-settings">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Store Configuration &amp; Bank Account</h2>
+                <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Directly persists to Supabase `store_config` table</div>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <form id="storeSettingsForm">
+                <h3 style="font-size: 0.9rem; font-weight: 800; color: #0f172a; margin-bottom: 1rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.5rem;">Store Identity &amp; Contact</h3>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="settingStoreName">Store Name</label>
+                    <input type="text" id="settingStoreName" class="form-control" value="Health is Wealth" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="settingWhatsapp">WhatsApp Order Number (International format)</label>
+                    <input type="text" id="settingWhatsapp" class="form-control" value="2348084765252" required />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="settingPhoneDisplay">Phone Display Text</label>
+                    <input type="text" id="settingPhoneDisplay" class="form-control" value="08084765252" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="settingLocation">Store Location Summary</label>
+                    <input type="text" id="settingLocation" class="form-control" value="Enugu, Abuja & Lagos, Nigeria (Nationwide Delivery)" required />
+                  </div>
+                </div>
+
+                <h3 style="font-size: 0.9rem; font-weight: 800; color: #0f172a; margin: 1.5rem 0 1rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.5rem;">Payment &amp; Banking Details (Sterling Bank)</h3>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="settingBankName">Bank Name</label>
+                    <input type="text" id="settingBankName" class="form-control" value="Sterling Bank" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="settingBankAccount">Bank Account Number</label>
+                    <input type="text" id="settingBankAccount" class="form-control" value="0097137583" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="settingAccountName">Account Name</label>
+                    <input type="text" id="settingAccountName" class="form-control" value="Ezema Emmanuel Tochukwu" required />
+                  </div>
+                </div>
+
+                <h3 style="font-size: 0.9rem; font-weight: 800; color: #0f172a; margin: 1.5rem 0 1rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.5rem;">Social Media Links</h3>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="settingFacebook">Facebook URL</label>
+                    <input type="url" id="settingFacebook" class="form-control" placeholder="https://facebook.com/..." />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="settingInstagram">Instagram URL</label>
+                    <input type="url" id="settingInstagram" class="form-control" placeholder="https://instagram.com/..." />
+                  </div>
+                </div>
+
+                <button type="submit" id="btnSaveStoreSettings" class="btn btn-primary" style="margin-top: 1rem;">
+                  <span>Save Settings to Supabase</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===============================================================
+             PANEL 8: SUPABASE DIAGNOSTICS & SYNC UTILITY
+             =============================================================== -->
+        <section class="admin-panel" id="panel-sync">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Supabase Cloud Integration &amp; Live Diagnostics</h2>
+                <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">Real-time database connectivity and bulk synchronization</div>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                  <div>
+                    <div style="font-weight: 700; color: #0f172a;" id="diagStatusTitle">Supabase PostgreSQL Database Active</div>
+                    <div style="font-size: 0.75rem; color: #64748b;" id="diagStatusSub">REST Endpoint connected • Anonymous JWT Authenticated</div>
+                  </div>
+                  <button type="button" class="btn btn-secondary btn-sm" id="btnTestSupabasePing">Test Latency</button>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem; border-top: 1px solid #e2e8f0; padding-top: 1rem;">
+                  <div>
+                    <span style="font-size: 0.72rem; color: #64748b; text-transform: uppercase;">Products Table:</span>
+                    <div style="font-weight: 700; color: #059669;" id="diagProductsCount">-</div>
+                  </div>
+                  <div>
+                    <span style="font-size: 0.72rem; color: #64748b; text-transform: uppercase;">Categories Table:</span>
+                    <div style="font-weight: 700; color: #059669;" id="diagCategoriesCount">-</div>
+                  </div>
+                  <div>
+                    <span style="font-size: 0.72rem; color: #64748b; text-transform: uppercase;">Orders Table:</span>
+                    <div style="font-weight: 700; color: #059669;" id="diagOrdersCount">-</div>
+                  </div>
+                  <div>
+                    <span style="font-size: 0.72rem; color: #64748b; text-transform: uppercase;">Store Config:</span>
+                    <div style="font-weight: 700; color: #059669;" id="diagConfigStatus">-</div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <button type="button" class="btn btn-secondary" id="btnForcePullAll">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                  <span>Pull Fresh Data from Supabase</span>
+                </button>
+                <button type="button" class="btn btn-primary" id="btnForcePushAll">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14M23 10l-4.64-4.36A9 9 0 0 0 3.51 9"></path></svg>
+                  <span>Force Push All Local Items to Supabase</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
     </div>
   </div>
 
-  <!-- MODAL: SUPABASE SQL SCHEMA SCRIPT -->
-  <div class="modal-backdrop" id="supabaseSqlModal" style="display: none;">
-    <div class="modal-dialog" style="max-width: 780px; width: 95%;">
+  <!-- =====================================================================
+       3. MODAL: ADD / EDIT PRODUCT
+       ===================================================================== -->
+  <div class="modal-backdrop" id="productModalBackdrop">
+    <div class="modal-window">
       <div class="modal-header">
         <div style="display: flex; align-items: center; gap: 10px;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#009444" stroke-width="2.2">
-            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-          </svg>
-          <div>
-            <h3 style="margin: 0; font-size: 1.15rem; font-weight: 800; color: #111827;">Supabase Database SQL Schema</h3>
-            <p style="margin: 2px 0 0 0; font-size: 0.8rem; color: #64748b;">Copy and paste this script into your Supabase SQL Editor</p>
-          </div>
+          <h3 class="modal-title" id="productModalTitle">Add New Product</h3>
+          <span class="badge badge-info" id="prodFormIdBadge" style="display: none;">ID: #</span>
         </div>
-        <button type="button" class="btn-close-modal" onclick="closeSqlSchemaModal()" aria-label="Close modal">✕</button>
+        <button type="button" class="modal-close-btn" onclick="closeProductModal()" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
       </div>
 
-      <div class="modal-body-scroll" style="max-height: 70vh; padding: 20px;">
-        <!-- Quick Setup Instructions -->
-        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 14px 16px; margin-bottom: 16px;">
-          <h4 style="margin: 0 0 6px 0; color: #166534; font-size: 0.9rem; font-weight: 700;">How to Run in Supabase:</h4>
-          <ol style="margin: 0; padding-left: 20px; font-size: 0.84rem; color: #14532d; line-height: 1.5;">
-            <li>Log in to your <a href="https://supabase.com/dashboard" target="_blank" rel="noopener noreferrer" style="color: #009444; font-weight: 700; text-decoration: underline;">Supabase Dashboard</a> and open your project.</li>
-            <li>Click the <strong>SQL Editor</strong> tab (terminal icon) on the left sidebar.</li>
-            <li>Click <strong>New Query</strong>, paste this entire script, and click the green <strong>Run</strong> button.</li>
-          </ol>
+      <form id="productForm">
+        <div class="modal-body">
+          <input type="hidden" id="prodFormId" />
+
+          <!-- SECTION 1: ESSENTIAL DETAILS -->
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem; margin-bottom: 1.25rem;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+              Product Identification &amp; Category
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0.75rem;">
+              <label class="form-label" for="prodFormName">Product Name *</label>
+              <input type="text" id="prodFormName" class="form-control" required placeholder="e.g. Pure Golden Glow Herbal Body Milk" />
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="prodFormCategory">Store Category *</label>
+              <select id="prodFormCategory" class="form-control" required>
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+          </div>
+
+          <!-- SECTION 2: PRICING & INVENTORY -->
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem; margin-bottom: 1.25rem;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+              Pricing, Discounts &amp; Stock Availability
+            </div>
+
+            <div class="form-row" style="margin-bottom: 0.75rem;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="prodFormPriceNum">Selling Price (NGN ₦) *</label>
+                <input type="number" id="prodFormPriceNum" class="form-control" required placeholder="19500" min="0" />
+                <div style="font-size: 0.75rem; color: #059669; font-weight: 600; margin-top: 4px;" id="prodFormPriceDisplay">Formatted: ₦0</div>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label" for="prodFormOldPriceNum">Original / Regular Price (Optional)</label>
+                <input type="number" id="prodFormOldPriceNum" class="form-control" placeholder="24000" min="0" />
+                <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;" id="prodFormDiscountDisplay">Discount will be calculated automatically</div>
+              </div>
+            </div>
+
+            <div class="form-row" style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #e2e8f0;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <label class="toggle-switch">
+                  <input type="checkbox" id="prodFormInStock" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+                <div>
+                  <label for="prodFormInStock" style="font-size: 0.85rem; font-weight: 700; color: #0f172a; cursor: pointer; display: block;">In Stock</label>
+                  <span style="font-size: 0.72rem; color: #64748b;">Customers can add this item to cart</span>
+                </div>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <label class="toggle-switch">
+                  <input type="checkbox" id="prodFormFeatured" />
+                  <span class="toggle-slider"></span>
+                </label>
+                <div>
+                  <label for="prodFormFeatured" style="font-size: 0.85rem; font-weight: 700; color: #0f172a; cursor: pointer; display: block;">Featured Collection</label>
+                  <span style="font-size: 0.72rem; color: #64748b;">Highlight on website homepage</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 3: MEDIA & SUPABASE STORAGE -->
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem; margin-bottom: 1.25rem;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+              <span>Product Image &amp; Supabase Storage</span>
+              <span style="font-size: 0.7rem; color: #64748b; font-weight: 500;">Bucket: product-images</span>
+            </div>
+
+            <div style="display: flex; gap: 14px; align-items: flex-start;">
+              <div style="width: 80px; height: 80px; border-radius: 10px; border: 2px dashed #cbd5e1; overflow: hidden; background: #ffffff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative;">
+                <img id="prodFormImagePreview" src="" alt="" style="width: 100%; height: 100%; object-fit: cover; display: none;" />
+                <span id="prodFormImageFallback" style="font-size: 0.7rem; color: #94a3b8; text-align: center; padding: 4px;">No Image</span>
+              </div>
+
+              <div style="flex: 1;">
+                <div class="form-group" style="margin-bottom: 0.5rem;">
+                  <input type="text" id="prodFormImage" class="form-control" placeholder="https://... or upload new image" />
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                  <input type="file" id="productImageFileInput" accept="image/*" style="display: none;" />
+                  <button type="button" class="btn btn-secondary btn-sm" id="btnUploadImageForProduct">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    <span>Upload to Supabase Storage</span>
+                  </button>
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="switchView('media'); closeProductModal();">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                    <span>Browse Media Library</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 4: DESCRIPTION -->
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.25rem;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+              Description
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="prodFormDescription">Product Description</label>
+              <textarea id="prodFormDescription" class="form-control" rows="5" placeholder="Enter product description, ingredients, benefits, and usage instructions..."></textarea>
+            </div>
+          </div>
+
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <span style="font-size: 0.82rem; font-weight: 700; color: #475569;">SQL Script (supabase-schema.sql)</span>
-          <button type="button" class="btn-secondary" onclick="copySqlSchemaCode()" id="btnCopySqlScript" style="padding: 6px 14px; font-size: 0.82rem;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-            </svg>
-            <span id="copySqlBtnText">Copy Entire SQL Script</span>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeProductModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnSaveProductSubmit">
+            <span id="saveProductBtnText">Save Product to Supabase</span>
           </button>
         </div>
+      </form>
+    </div>
+  </div>
 
-        <pre id="supabaseSqlCodeContainer" style="background: #0f172a; color: #f8fafc; padding: 16px; border-radius: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 0.78rem; line-height: 1.5; overflow-x: auto; max-height: 380px; white-space: pre; margin: 0; border: 1px solid #334155;"></pre>
+  <!-- =====================================================================
+       4. MODAL: ADD CATEGORY
+       ===================================================================== -->
+  <div class="modal-backdrop" id="categoryModalBackdrop">
+    <div class="modal-window" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="categoryModalTitle">Add New Store Category</h3>
+        <button type="button" class="modal-close-btn" onclick="closeCategoryModal()" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <form id="categoryForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="categoryFormName">Category Name *</label>
+            <input type="text" id="categoryFormName" class="form-control" required placeholder="e.g. Hair Care &amp; Scalp" />
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeCategoryModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnSaveCategorySubmit">
+            <span>Add Category to Supabase</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       5. MODAL: ORDER DETAILS
+       ===================================================================== -->
+  <div class="modal-backdrop" id="orderModalBackdrop">
+    <div class="modal-window" style="max-width: 580px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="orderModalTitle">Order Details</h3>
+        <button type="button" class="modal-close-btn" onclick="closeOrderModal()" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="modal-body" id="orderModalBody">
+        <!-- Injected dynamically -->
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn-secondary" onclick="closeSqlSchemaModal()">Close</button>
-        <button type="button" class="btn-primary" onclick="copySqlSchemaCode()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-          </svg>
-          <span>Copy SQL to Clipboard</span>
+        <button type="button" class="btn btn-secondary" onclick="closeOrderModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       6. MODAL: DELETE CONFIRMATION
+       ===================================================================== -->
+  <div class="modal-backdrop" id="deleteConfirmBackdrop">
+    <div class="modal-window" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="deleteConfirmTitle">Confirm Deletion</h3>
+        <button type="button" class="modal-close-btn" onclick="closeDeleteConfirmModal()" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
+      </div>
+
+      <div class="modal-body">
+        <p style="font-size: 0.9rem; color: #475569; line-height: 1.5;" id="deleteConfirmMessage">Are you sure you want to permanently remove this item from Supabase?</p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeDeleteConfirmModal()">Cancel</button>
+        <button type="button" class="btn btn-danger" id="btnExecuteDelete">Confirm Delete</button>
       </div>
     </div>
   </div>
 
   <!-- Toast Notification Container -->
-  <div class="admin-toast-container" id="adminToastContainer"></div>
+  <div class="toast-container" id="toastContainer"></div>
 
-  <!-- Shared Botanical Products Catalog Data -->
-  <script src="/products-data.js"></script>
-
-  <!-- Supabase REST Client Adapter -->
-  <script src="/supabase-client.js"></script>
-
-  <!-- Admin JavaScript Engine -->
-  <script src="/admin/admin.js"></script>
+  <!-- Scripts -->
+  <script src="/products-data.js?v=20260923_admin"></script>
+  <script src="/supabase-client.js?v=20260923_admin"></script>
+  <script type="module" src="/admin/admin.js?v=20260923_admin"></script>
 </body>
 </html>

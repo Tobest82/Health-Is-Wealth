@@ -526,6 +526,117 @@
     },
 
     /**
+     * Fetch all orders from Supabase (descending by created_at)
+     */
+    async fetchOrders() {
+      await this.ensureConfig();
+      const cfg = this.getConfig();
+      if (!cfg.isConfigured) return [];
+
+      try {
+        const response = await fetch(`${cfg.url}/rest/v1/orders?select=*&order=created_at.desc`, {
+          method: "GET",
+          headers: this.getHeaders()
+        });
+
+        if (!response.ok) return [];
+        const data = await response.json();
+        return Array.isArray(data) ? data : [];
+      } catch (e) {
+        console.warn("Could not fetch orders from Supabase:", e);
+        return [];
+      }
+    },
+
+    /**
+     * Update order status in Supabase
+     */
+    async updateOrderStatus(orderId, status) {
+      await this.ensureConfig();
+      const cfg = this.getConfig();
+      if (!cfg.isConfigured) return false;
+
+      try {
+        const response = await fetch(`${cfg.url}/rest/v1/orders?id=eq.${orderId}`, {
+          method: "PATCH",
+          headers: {
+            ...this.getHeaders(),
+            "Prefer": "return=representation"
+          },
+          body: JSON.stringify({ status })
+        });
+        return response.ok;
+      } catch (e) {
+        console.warn("Could not update order status in Supabase:", e);
+        return false;
+      }
+    },
+
+    /**
+     * Delete an order by ID
+     */
+    async deleteOrder(orderId) {
+      await this.ensureConfig();
+      const cfg = this.getConfig();
+      if (!cfg.isConfigured) return false;
+
+      try {
+        const response = await fetch(`${cfg.url}/rest/v1/orders?id=eq.${orderId}`, {
+          method: "DELETE",
+          headers: this.getHeaders()
+        });
+        return response.ok;
+      } catch (e) {
+        console.warn("Could not delete order from Supabase:", e);
+        return false;
+      }
+    },
+
+    /**
+     * Add a single category to Supabase
+     */
+    async addCategory(name) {
+      await this.ensureConfig();
+      const cfg = this.getConfig();
+      if (!cfg.isConfigured || !name) return false;
+
+      try {
+        const response = await fetch(`${cfg.url}/rest/v1/categories`, {
+          method: "POST",
+          headers: {
+            ...this.getHeaders(),
+            "Prefer": "resolution=merge-duplicates"
+          },
+          body: JSON.stringify({ name: String(name).trim() })
+        });
+        return response.ok;
+      } catch (e) {
+        console.warn("Could not add category to Supabase:", e);
+        return false;
+      }
+    },
+
+    /**
+     * Delete a category from Supabase by name
+     */
+    async deleteCategory(name) {
+      await this.ensureConfig();
+      const cfg = this.getConfig();
+      if (!cfg.isConfigured || !name) return false;
+
+      try {
+        const response = await fetch(`${cfg.url}/rest/v1/categories?name=eq.${encodeURIComponent(name)}`, {
+          method: "DELETE",
+          headers: this.getHeaders()
+        });
+        return response.ok;
+      } catch (e) {
+        console.warn("Could not delete category from Supabase:", e);
+        return false;
+      }
+    },
+
+    /**
      * Fast Chunked Bulk Push of all products, categories, and config to Supabase
      * Uploads in rapid batches with progress notifications to prevent timeouts
      */

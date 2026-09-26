@@ -4,37 +4,6 @@
  * while retaining all "Health is Wealth" content, products & WhatsApp flows.
  */
 
-// If visitor explicitly navigates to /admin, ensure they land directly on the admin portal
-if (typeof window !== "undefined") {
-  const path = (window.location.pathname || "").toLowerCase();
-  const hash = (window.location.hash || "").toLowerCase();
-  const search = (window.location.search || "").toLowerCase();
-  if (path === "/admin" || path === "/admin/" || hash === "#admin" || path.endsWith("/admin")) {
-    if (path !== "/admin/index.html") {
-      window.location.replace("/admin/index.html");
-    }
-  }
-
-  // Quick keyboard access: typing "admin" or pressing Ctrl+Shift+A opens /admin/index.html
-  let keySequence = "";
-  window.addEventListener("keydown", (e) => {
-    // Ignore input fields so regular typing in forms isn't captured
-    if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA" || e.target.isContentEditable)) {
-      return;
-    }
-    if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === "a") {
-      window.location.href = "/admin/index.html";
-      return;
-    }
-    if (e.key && e.key.length === 1) {
-      keySequence = (keySequence + e.key.toLowerCase()).slice(-5);
-      if (keySequence === "admin") {
-        window.location.href = "/admin/index.html";
-      }
-    }
-  });
-}
-
 // Store Configuration
 const DEFAULT_STORE_CONFIG = {
   storeName: "Health is Wealth",
@@ -378,7 +347,11 @@ document.addEventListener("DOMContentLoaded", syncFooterSocialLinks);
 
 // Background Supabase Synchronizer for Storefront
 async function initSupabaseStorefrontSync() {
-  if (typeof window.SupabaseStore === "undefined" || !window.SupabaseStore.isConfigured()) return;
+  if (typeof window.SupabaseStore === "undefined") return;
+  try {
+    await window.SupabaseStore.ensureConfig();
+  } catch (e) {}
+  if (!window.SupabaseStore.isConfigured()) return;
 
   try {
     const [cloudProducts, cloudConfig, cloudCategories] = await Promise.all([
@@ -459,7 +432,7 @@ try {
   console.warn("Could not load categories from localStorage:", e);
 }
 
-// Re-sync if changed by Admin Dashboard in another tab or same window
+// Re-sync if categories changed in another tab or storage
 function handleSyncCategories() {
   try {
     const saved = localStorage.getItem("healthIsWealth_categories");
@@ -474,7 +447,7 @@ function handleSyncCategories() {
   } catch (err) {}
 }
 
-// Re-sync if products changed by Admin Dashboard
+// Re-sync if products changed in another tab or storage
 function handleSyncProducts() {
   try {
     const saved = localStorage.getItem("healthIsWealth_products");
@@ -508,6 +481,37 @@ window.addEventListener("storage", (e) => {
 });
 window.addEventListener("categoriesUpdated", handleSyncCategories);
 window.addEventListener("productsUpdated", handleSyncProducts);
+
+// Realtime BroadcastChannel Listener for Instant Admin Sync
+try {
+  const syncChannel = new BroadcastChannel("healthIsWealth_sync");
+  syncChannel.onmessage = (event) => {
+    const data = event.data;
+    if (!data) return;
+    if (data.type === "products_updated") {
+      if (Array.isArray(data.payload)) {
+        PRODUCTS = data.payload;
+        if (typeof renderProducts === "function") renderProducts();
+        if (typeof updateStatsCounter === "function") updateStatsCounter();
+        if (typeof renderFeaturedProducts === "function") renderFeaturedProducts();
+      }
+    } else if (data.type === "categories_updated") {
+      if (Array.isArray(data.payload)) {
+        STORE_CATEGORIES = data.payload;
+        if (typeof setupCollections === "function") setupCollections();
+        if (typeof renderCategoryFilters === "function") renderCategoryFilters();
+      }
+    } else if (data.type === "config_updated") {
+      if (data.payload) {
+        STORE_CONFIG = { ...DEFAULT_STORE_CONFIG, ...data.payload };
+        if (typeof syncFooterSocialLinks === "function") syncFooterSocialLinks();
+        if (typeof setupRegulationNav === "function") setupRegulationNav();
+      }
+    }
+  };
+} catch (e) {
+  // BroadcastChannel not available in environment
+}
 
 // App State
 let activeCollection = "All";
@@ -649,10 +653,6 @@ function renderProducts() {
       <div class="product-details">
         <div class="product-image" onclick="openQuickView(${p.id})">
           <img src="${p.image}" alt="${escapeHtml(p.name)}" loading="lazy" />
-          <div class="tags">
-            ${p.tag ? `<span class="tag-badge ${p.tag.toLowerCase() === 'bestseller' ? 'natural' : ''}">${p.tag}</span>` : ''}
-            ${p.discount ? `<span class="tag-badge sale">${p.discount}</span>` : ''}
-          </div>
         </div>
 
         <div class="product-data">
@@ -822,7 +822,6 @@ function setupSearch() {
 
     if (val.length >= 2) {
       const lowerVal = val.toLowerCase();
-      const isAdminMatch = "admin".includes(lowerVal) || lowerVal.includes("admin");
 
       const matches = PRODUCTS.filter(p => 
         p.name.toLowerCase().includes(lowerVal) || 
@@ -830,24 +829,6 @@ function setupSearch() {
       ).slice(0, 5);
 
       let itemsHtml = '';
-
-      // If user typed "admin", show dedicated admin portal shortcut
-      if (isAdminMatch) {
-        itemsHtml += `
-          <div class="suggestion-item suggestion-admin" onclick="window.location.href='/admin/index.html'">
-            <div style="width: 38px; height: 38px; border-radius: 6px; background: #059669; color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>
-            </div>
-            <div class="suggestion-info">
-              <span class="suggestion-name" style="font-weight: 700; color: #065f46;">Admin Dashboard (/admin)</span>
-              <span class="suggestion-price" style="color: #047857; font-size: 0.75rem;">Manage products, pricing &amp; settings</span>
-            </div>
-          </div>
-        `;
-      }
 
       if (matches.length > 0) {
         itemsHtml += matches.map(p => `
@@ -876,11 +857,6 @@ function setupSearch() {
 
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-      const val = input.value.trim().toLowerCase();
-      if (val === "admin" || val === "/admin") {
-        window.location.href = "/admin/index.html";
-        return;
-      }
       suggestionsBox.style.display = "none";
       renderProducts();
       const section = document.getElementById("productsSection");
@@ -890,11 +866,6 @@ function setupSearch() {
 
   if (searchBtn) {
     searchBtn.addEventListener("click", () => {
-      const val = input.value.trim().toLowerCase();
-      if (val === "admin" || val === "/admin") {
-        window.location.href = "/admin/index.html";
-        return;
-      }
       suggestionsBox.style.display = "none";
       renderProducts();
       const section = document.getElementById("productsSection");

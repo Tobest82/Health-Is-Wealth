@@ -36,22 +36,6 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="/style.css" />
 
-  <script>
-    // Universal Admin Route Redirection
-    (function() {
-      try {
-        var p = (window.location.pathname || '').toLowerCase();
-        var h = (window.location.hash || '').toLowerCase();
-        var s = (window.location.search || '').toLowerCase();
-        if (p === '/admin' || p === '/admin/' || h === '#admin' || h.indexOf('admin') !== -1 || s.indexOf('admin') !== -1) {
-          if (p !== '/admin/index.html') {
-            window.location.replace('/admin/index.html');
-          }
-        }
-      } catch (e) {}
-    })();
-  </script>
-
   <!-- Schema.org Structured Data -->
   <script type="application/ld+json">
   {
@@ -580,12 +564,12 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- Shared Botanical Products Catalog Data -->
-  <script src="/products-data.js"></script>
+  <script src="/products-data.js?v=20260923_4"></script>
 
   <!-- Supabase REST Client Adapter -->
-  <script src="/supabase-client.js"></script>
+  <script src="/supabase-client.js?v=20260923_4"></script>
 
   <!-- Vanilla JavaScript Application Engine -->
-  <script src="/script.js"></script>
+  <script src="/script.js?v=20260923_4"></script>
 </body>
 </html>

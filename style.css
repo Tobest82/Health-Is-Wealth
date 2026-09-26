@@ -943,34 +943,10 @@ img {
   transform: scale(1.05);
 }
 
-/* Floating Badges / Tags */
-.product-image .tags {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  z-index: 2;
-}
-
+/* Floating Badges / Tags (Hidden per specification) */
+.product-image .tags,
 .tag-badge {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 3px 8px;
-  border-radius: var(--radius-sm);
-  background-color: #0d1821;
-  color: #ffffff;
-}
-
-.tag-badge.sale {
-  background-color: #e11d48;
-}
-
-.tag-badge.natural {
-  background-color: var(--bumpa-primary);
+  display: none !important;
 }
 
 /* Product Data */
@@ -2174,19 +2150,5 @@ img {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* ==========================================================================
-   PRODUCT SEARCH SHORTCUT FOR ADMIN DASHBOARD
-   ========================================================================== */
-.suggestion-admin {
-  background-color: #ecfdf5 !important;
-  border-left: 3.5px solid #059669 !important;
-  cursor: pointer;
-  transition: background-color var(--transition-fast);
-}
-
-.suggestion-admin:hover {
-  background-color: #d1fae5 !important;
 }
 
